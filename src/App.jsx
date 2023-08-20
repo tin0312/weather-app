@@ -1,13 +1,14 @@
-import React from 'react'
+import React from "react";
+import CurrentWeather from "./components/CurrentWeather"
+import FutureWeather from "./components/FutureWeather";
 
 function App() {
-  
-
   return (
-    <>
-      <h1> Weather App</h1>
-    </>
-  )
+    <div className="main-wrapper">
+      <CurrentWeather />
+      <FutureWeather />
+    </div>
+  );
 }
 
-export default App
+export default App;
