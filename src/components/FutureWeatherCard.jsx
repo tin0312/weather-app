@@ -13,3 +13,9 @@ export default function FutureWeatherCard() {
     </div>
   );
 }
+/*
+Task 2: Fetching data for 5 days in the future 
+
+-Source: Daily Forecast 16 days
+
+*/

@@ -1,6 +1,6 @@
 import React from "react";
 import CurrrentWeatherCard from "./CurrentWeatherCard"
-export default function CurrentWeather() {
+export default function CurrentWeather( {currentWeather}) {
   //a search bar and current location weather display
   return (
     <div className="current-weather">
@@ -15,7 +15,7 @@ export default function CurrentWeather() {
         </form>
         <span className="material-symbols-outlined">share_location</span>
       </div>
-      <CurrrentWeatherCard />
+      <CurrrentWeatherCard currentWeather={currentWeather}/>
     </div>
   );
 }

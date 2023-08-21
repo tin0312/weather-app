@@ -1,9 +1,9 @@
 import React from "react";
 import FutureWeatherCard from "./FutureWeatherCard";
-import FutureWeatherDetails from "./FutureWeatherDetails";
+import WeatherHightLights from "./WeatherHightLights";
 import Footer from "./Footer";
 
-export default function FutureWeather() {
+export default function FutureWeather({ weatherHightLights }) {
   return (
     <div className="weather-details">
       <div className="temperature-display">
@@ -11,7 +11,7 @@ export default function FutureWeather() {
         <span className="F">℉</span>
       </div>
       <FutureWeatherCard />
-      <FutureWeatherDetails />
+      <WeatherHightLights weatherHightLights = {weatherHightLights}/>
       <Footer />
     </div>
   );
