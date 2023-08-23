@@ -65,19 +65,20 @@ const currrentWeather =
 
 */
 
-async function getCurrentWeather(){
-      const currrentWeatherURL = "https://api.openweathermap.org/data/2.5/weather?lat=43.6534817&lon=-79.3839347&appid=573681bc8bb6fdda297f36fbefb6905c"
-      try {
-        const response = await fetch(currrentWeatherURL)
-        const data = await response.json()
-        return data
-      } catch(error) {
-        console.log("Weather data collection failed:", error)
-        return null
-      }
+async function getCurrentWeather(lat, lon) {
+  const apiKey = "573681bc8bb6fdda297f36fbefb6905c";
+  const currrentWeatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+  try {
+    const response = await fetch(currrentWeatherURL);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log("Weather data collection failed:", error);
+    return null;
+  }
 }
 
-export { getCurrentWeather }
+export { getCurrentWeather };
 
 /*
 
@@ -89,5 +90,17 @@ Task 2: Fetching data for 5 days in the future
 
 */
 
+async function getCodingLocation(userInput){
+    const geocodingAPIKey = "AIzaSyAFDmP3CwyazBQXZaK_X9bKlmp_7XJldD0"
+    const geocodingURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${userInput}&key=${geocodingAPIKey}`
+    try {
+        const response = await fetch(geocodingURL)
+        const data = await response.json()
+        return data
+    } catch(error) {
+        console.log("Geocoding location request failed:", error)
+    }
+}
 
 
+export { getCodingLocation }

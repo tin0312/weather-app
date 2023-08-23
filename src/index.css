@@ -11,8 +11,8 @@
   flex-direction: column;
   height: 100vh;
   width: 35vw;
-  background-color: #1E213A;
-  color: #E7E7EB;
+  background-color: #1e213a;
+  color: #e7e7eb;
 }
 .search-bar {
   display: flex;
@@ -51,6 +51,12 @@
   justify-content: center;
   align-items: center;
   gap: 30px;
+  color: #88869D;
+  font-family: "Raleway", sans-serif;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
 
 input[type="search"] {
@@ -83,7 +89,7 @@ span.material-symbols-outlined {
   color: #e7e7eb;
   align-items: center;
 }
-.temperature-display{
+.temperature-display {
   display: flex;
   justify-content: flex-end;
   width: 70%;
@@ -92,22 +98,23 @@ span.material-symbols-outlined {
   gap: 10px;
   padding-top: 20px;
 }
-.C, .F {
+.C,
+.F {
   width: 35px;
   height: 35px;
-  border-radius:54px;
-  background-color: #E7E7EB;
+  border-radius: 54px;
+  background-color: #e7e7eb;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .C {
-  background-color: #E7E7EB;
-  color: #110E3C;
+  background-color: #e7e7eb;
+  color: #110e3c;
 }
-.F{
+.F {
   background-color: #585676;
-  color: #E7E7EB;
+  color: #e7e7eb;
 }
 .future-cards {
   width: 70%;
@@ -134,7 +141,22 @@ span.material-symbols-outlined {
   height: 70vh;
   width: 100%;
 }
-.hightlight{
+.today-cards h3 {
+  text-align: center;
+  font-family: "Raleway" sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.today-cards p {
+  font-family: "Raleway" sans-serif;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.today-details .hightlight {
   width: 70%;
   margin: 0 auto;
 }
@@ -143,9 +165,10 @@ span.material-symbols-outlined {
   flex-wrap: wrap;
   justify-content: space-between;
   width: 70%;
-  height: 70%;
+  height: auto;
+  gap: 50px;
   margin: 0 auto;
-  align-content:space-between;
+  align-content: space-between;
 }
 .today-feature {
   width: 328px;
@@ -157,9 +180,10 @@ span.material-symbols-outlined {
   flex-direction: column;
   gap: 20px;
 }
-#visibility, #air {
+#visibility,
+#air {
   height: 159px;
 }
-.footer{
-  margin-bottom:25px;
+.footer {
+  margin-bottom: 25px;
 }
