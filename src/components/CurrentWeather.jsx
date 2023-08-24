@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CurrrentWeatherCard from "./CurrentWeatherCard";
-import LocationSearch from "./searchBar";
+import LocationSearch from "./LocationSearch";
 import { getCurrentWeather } from "../services/api";
 
 export default function CurrentWeather({ currentWeather }) {
@@ -33,7 +33,10 @@ export default function CurrentWeather({ currentWeather }) {
         <LocationSearch onSearchChange={onSearchChange} />
         <span className="material-symbols-outlined">share_location</span>
       </div>
-      <CurrrentWeatherCard currentWeather={searchWeatherData} />
+      { searchWeatherData.name?
+        <CurrrentWeatherCard currentWeather={searchWeatherData} /> :
+        <CurrrentWeatherCard currentWeather={currentWeather} />
+      }
     </div>
   );
 }
