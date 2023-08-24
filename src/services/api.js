@@ -1,5 +1,10 @@
 /*
-Task1: Pulling API to fill this form 
+
+Task 2: Fetching data for 5 days in the future 
+
+-Source: Daily Forecast 16 days
+
+Task1: Pulling data from API 
 
 - Source: Current Weather API 
 
@@ -80,27 +85,30 @@ async function getCurrentWeather(lat, lon) {
 
 export { getCurrentWeather };
 
-/*
-
-
-
-Task 2: Fetching data for 5 days in the future 
-
--Source: Daily Forecast 16 days
-
-*/
-
-async function getCodingLocation(userInput){
-    const geocodingAPIKey = "AIzaSyAFDmP3CwyazBQXZaK_X9bKlmp_7XJldD0"
-    const geocodingURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${userInput}&key=${geocodingAPIKey}`
-    try {
-        const response = await fetch(geocodingURL)
-        const data = await response.json()
-        return data
-    } catch(error) {
-        console.log("Geocoding location request failed:", error)
-    }
+async function getCodingLocation(userInput) {
+  const geocodingAPIKey = "AIzaSyAFDmP3CwyazBQXZaK_X9bKlmp_7XJldD0";
+  const geocodingURL = `https://maps.googleapis.com/maps/api/geocode/json?address=${userInput}&key=${geocodingAPIKey}`;
+  try {
+    const response = await fetch(geocodingURL);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log("Geocoding location request failed:", error);
+  }
 }
 
+export { getCodingLocation };
 
-export { getCodingLocation }
+export const geoApiOptions = {
+  method: "GET",
+  headers: {
+    "X-RapidAPI-Key": "7db4563c2bmsh3d569acf360fe8fp11270fjsnd5c4d4fc6631",
+    "X-RapidAPI-Host": "wft-geo-db.p.rapidapi.com",
+  },
+};
+export const GEO_API_URL = "https://wft-geo-db.p.rapidapi.com/v1/geo";
+
+
+export const WEATHER_API_URL = "https://api.openweathermap.org/data/2.5";
+export const WEATHER_API_KEY = "573681bc8bb6fdda297f36fbefb6905c"; // enter your key from openweather API
+
