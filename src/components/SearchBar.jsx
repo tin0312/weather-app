@@ -5,6 +5,7 @@ import { geoApiOptions, GEO_API_URL } from  "../services/api"
 const Search = ({ onSearchChange }) => {
   const [search, setSearch] = useState(null);
 
+  // to be refactored using async/await 
   const loadOptions = (inputValue) => {
     return fetch(
       `${GEO_API_URL}/cities?minPopulation=1000000&namePrefix=${inputValue}`,
@@ -29,13 +30,16 @@ const Search = ({ onSearchChange }) => {
   };
 
   return (
-    <AsyncPaginate
+  
+     <AsyncPaginate
+      className = "search-data"
       placeholder="Search for city"
       debounceTimeout={600}
       value={search}
       onChange={handleOnChange}
       loadOptions={loadOptions}
     />
+  
   );
 };
 

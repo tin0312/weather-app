@@ -29,30 +29,3 @@ export default function CurrentWeatherCard({ currentWeather }) {
   );
 }
 
-
-
-/*
-
-Task 1: Get the current time
-- Install moment.js : npm install moment --save
-- moment(unixTimeStamp).format()
-Task 2: Find users current location
-
-- use browser API : navigator.geolocation to get the lat & lon
-- use useEffect to get the current location
-- use useState to store the current location
-
-
-Task 3: Get the current weather data for the users location
-- Give API call function 2 arguments : lat & lon
-- Pass geolocation state as parameters to API call to get the most updated location
-
-Task 4: Search for all location on search bar
-
-- A state to save user input to in seach bar 
-
-- Take that input and find geolocation
-
-- Take that geolocation and append it with API call function
-
-*/
