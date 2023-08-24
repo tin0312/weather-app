@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AsyncPaginate } from "react-select-async-paginate";
 import { geoApiOptions, GEO_API_URL } from  "../services/api"
 
-const Search = ({ onSearchChange }) => {
+const LocationSearch = ({ onSearchChange }) => {
   const [search, setSearch] = useState(null);
 
   // to be refactored using async/await 
@@ -43,4 +43,4 @@ const Search = ({ onSearchChange }) => {
   );
 };
 
-export default Search;
+export default LocationSearch;
