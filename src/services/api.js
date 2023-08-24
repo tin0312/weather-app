@@ -15,7 +15,21 @@ async function getCurrentWeather(lat, lon) {
 
 export { getCurrentWeather };
 
+// Get 6 days weather 
+async function getSixDaysWeather(lat, lon) {
+  const apiKey = "573681bc8bb6fdda297f36fbefb6905c";
+  const sixDaysWeatherURL = `http://api.openweathermap.org/data/2.5/forecast/daily?lat=${lat}&lon=${lon}&cnt=6&appid=${apiKey}`
+    try {
+        const response = await fetch(sixDaysWeatherURL)
+        const data = await response.json()
+        return data
+    } catch(error){
+        console.log('Weather data collection failed:', error)
+        return null
+    }
+  }
 
+export { getSixDaysWeather } 
 /*Setting up Asyn request to load cicies while search*/
 
 export const geoApiOptions = {

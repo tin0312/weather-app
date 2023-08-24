@@ -1,30 +1,31 @@
 import React, { useState, useEffect } from "react";
 import CurrrentWeatherCard from "./CurrentWeatherCard";
 import LocationSearch from "./LocationSearch";
-import { getCurrentWeather } from "../services/api";
+import { getSixDaysWeather } from "../services/api";
 
 export default function CurrentWeather({ currentWeather }) {
   const [searchWeatherData, setSearchWeatherData] = useState({
-      main: {},
-      weather: [],
-      name: "",
-  })
+    time_stamp: "",
+    temp: "",
+    weather: "",
+    name: "",
+  });
   const onSearchChange = (searchData) => {
-    console.log(searchData)
-        const [searchLat, searchLon] = searchData.value.split(" ");
-      const fetchSearchWeather = async () =>{
-        try {
-          const currentWeather = await getCurrentWeather(searchLat, searchLon)
-          setSearchWeatherData({
-            main: currentWeather.main,
-            weather: currentWeather.weather,
-            name: currentWeather.name,
-          })
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        }
-      } 
-      fetchSearchWeather()
+    const [searchLat, searchLon] = searchData.value.split(" ");
+    const fetchSearchWeather = async () => {
+      try {
+        const currentWeather = await getSixDaysWeather(searchLat, searchLon);
+        setSearchWeatherData({
+          time_stamp: currentWeather.list[0].dt,
+          temp: currentWeather.list[0].temp.day,
+          weather: currentWeather.list[0].weather[0].main,
+          name: currentWeather.city.name,
+        });
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    fetchSearchWeather();
   };
 
   return (
@@ -33,10 +34,11 @@ export default function CurrentWeather({ currentWeather }) {
         <LocationSearch onSearchChange={onSearchChange} />
         <span className="material-symbols-outlined">share_location</span>
       </div>
-      { searchWeatherData.name?
-        <CurrrentWeatherCard currentWeather={searchWeatherData} /> :
-        <CurrrentWeatherCard currentWeather={currentWeather} />
-      }
+      <CurrrentWeatherCard
+        currentWeather={
+          searchWeatherData.name ? searchWeatherData : currentWeather
+        }
+      />
     </div>
   );
 }
