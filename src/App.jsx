@@ -81,3 +81,52 @@ function App() {
 }
 
 export default App;
+/*
+
+Architecture
+
+App -> Current Weather + Future Weather
+
+
+CurrentWeather -> SearchBar + CurrentWeatherCard
+
+
+FutureWeather -> WeatherHightLights + FutureWeatherCard
+
+*/
+
+/*
+
+New architecture
+
+- App
+
+-> Current Weather(Search Bar +  CurrentWeather + HightLights)
+
+-> Focast
+
+Data Flow
+
+-Users location -> Current Weather -> HightLights -> Forecast 
+
+-SearchBar -> CurrentWeather -> HightLights -> Forecast
+
+
+
+*/
+
+/*
+
+New Layout 
+
+<div d-flex >
+
+  <CurrentWeather>
+
+
+<div>
+
+
+
+
+*/

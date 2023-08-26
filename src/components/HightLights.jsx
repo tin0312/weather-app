@@ -1,5 +1,5 @@
 import React from "react";
-export default function WeatherHightLights( { weatherHightLights}) {
+export default function HightLights( { weatherHightLights}) {
   const { wind_speed, wind_direction, humidity, air_pressure, feels_like} = weatherHightLights;
   const feels_likeC = (feels_like - 273.15).toFixed(0)
     return (

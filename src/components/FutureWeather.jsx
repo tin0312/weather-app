@@ -1,6 +1,6 @@
 import React from "react";
-import FutureWeatherCard from "./FutureWeatherCard";
-import WeatherHightLights from "./WeatherHightLights";
+import Focast from "./Focast";
+import HightLights from "./HightLights";
 import Footer from "./Footer";
 
 export default function FutureWeather({ weatherHightLights }) {
@@ -10,8 +10,8 @@ export default function FutureWeather({ weatherHightLights }) {
         <span className="C">℃</span>
         <span className="F">℉</span>
       </div>
-      <FutureWeatherCard />
-      <WeatherHightLights weatherHightLights = {weatherHightLights}/>
+      <Focast />
+      <HightLights weatherHightLights = {weatherHightLights}/>
       <Footer />
     </div>
   );

@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function FutureWeatherCard() {
+export default function Focast() {
   return (
     <div className="future-cards">
       <div className="future-card">
