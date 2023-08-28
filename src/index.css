@@ -11,8 +11,11 @@
   flex-direction: column;
   height: 100vh;
   width: 35vw;
-  background-color: #1e213a;
   color: #e7e7eb;
+  background-color: #1E213A;
+  background-image:  url("./assets/Cloud-Bg.png");
+  background-repeat: no-repeat;
+  background-position: center;
 }
 .search-bar {
   display: flex;
@@ -46,6 +49,10 @@
   width: 202px;
   height: 234px;
 }
+.future-card img {
+  Width:50px;
+  Height:55px;
+}
 .date-location {
   display: flex;
   flex-direction: column;
@@ -70,7 +77,7 @@ span.material-symbols-outlined {
   flex-direction: column;
   height: 100vh;
   width: 65vw;
-  background-color: #100e1d;
+  background-color: #100E1D;
   color: #e7e7eb;
   align-items: center;
 }
@@ -115,9 +122,8 @@ span.material-symbols-outlined {
   background-color: #1e213a;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
-  gap: 40px;
 }
 .today-details {
   display: flex;
