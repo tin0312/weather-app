@@ -1,5 +1,8 @@
 import React from "react";
 import moment from "moment";
+import * as weatherIcon from "../assets"
+
+
 
 export default function CurrentWeatherCard({ currentWeather }) {
   const { weather, temp, name, time_stamp } = currentWeather;
@@ -7,27 +10,27 @@ export default function CurrentWeatherCard({ currentWeather }) {
   const formattedDate = moment.unix(time_stamp).utc().format(" ddd, D MMM");
   const weatherIcons =
     weather === "Clear"
-      ? "src/assets/Clear.png"
+      ? weatherIcon.clearIcon
       : weather === "Clouds" && weather.description === "few clouds"
-      ? "src/assets/LightCloud.png"
+      ? weatherIcon.lightCloudIcon
       : weather === "Clouds" && weather.description === "overcast clouds"
-      ? "src/assets/HeavyCloud.png"
+      ? weatherIcon.heavyCloudIcon
       : weather === "Clouds"
-      ? "src/assets/LightCloud.png"
+      ? weatherIcon.lightCloudIcon
       : weather === "Rain" && currentWeather.description === "light rain"
-      ? "src/assets/LightRain.png"
+      ? weatherIcon.lightRainIcon
       : weather === "Rain" && currentWeather.description === "very heavy rain"
-      ? "src/assets/HeavyRain.png"
+      ? weatherIcon.heavyRainIcon
       : weather === "Rain" && currentWeather.description === "shower rain"
-      ? "src/assets/Shower.png"
+      ? weatherIcon.showerIcon
       : weather === "Rain"
-      ? "src/assets/LightRain.png"
+      ? weatherIcon.heavyRainIcon
       : weather === "Snow"
-      ? "src/assets/Snow.png"
+      ? weatherIcon.snowIcon
       : weather === "Snow" && currentWeather.description === "sleet"
-      ? "src/assets/Sleet.png"
+      ? weatherIcon.sleetIcon
       : weather === "Thunderstorm"
-      ? "src/assets/Thunderstorm.png"
+      ? weatherIcon.thunderstormIcon
       : "";
   return (
     <div className="currentWeatherCard-wrapper">
