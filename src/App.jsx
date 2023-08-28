@@ -22,6 +22,7 @@ function App() {
       humidity: "",
       air_pressure: "",
     },
+    forecast_data: [],
   });
 
   useEffect(() => {
@@ -47,6 +48,7 @@ function App() {
           geolocation.latitude,
           geolocation.longitude
         );
+        const forecastData = currentWeather.list.slice(1)
         setWeatherData({
           currentWeather: {
             time_stamp: currentWeather.list[0].dt,
@@ -61,6 +63,7 @@ function App() {
             humidity: currentWeather.list[0].humidity,
             air_pressure: currentWeather.list[0].pressure,
           },
+          forecast_data: forecastData,
         });
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -75,7 +78,10 @@ function App() {
         currentWeather={weatherData.currentWeather}
         setWeatherData={setWeatherData}
       />
-      <FutureWeather weatherHightLights={weatherData.weatherHightLights} />
+      <FutureWeather
+        weatherHightLights={weatherData.weatherHightLights}
+        forecastData={weatherData.forecast_data}
+      />
     </div>
   );
 }

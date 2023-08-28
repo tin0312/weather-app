@@ -22,6 +22,7 @@ export default function CurrentWeather({ currentWeather, setWeatherData }) {
           weather: currentWeather.list[0].weather[0].main,
           name: currentWeather.city.name,
         });
+        const forecastData = currentWeather.list.slice(1)
         setWeatherData({
           currentWeather: {
             time_stamp: currentWeather.list[0].dt,
@@ -36,6 +37,7 @@ export default function CurrentWeather({ currentWeather, setWeatherData }) {
             humidity: currentWeather.list[0].humidity,
             air_pressure: currentWeather.list[0].pressure,
           },
+          forecast_data: forecastData,
         });
       } catch (error) {
         console.error("Error fetching data:", error);
