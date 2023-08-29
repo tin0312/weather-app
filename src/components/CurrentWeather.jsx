@@ -3,7 +3,7 @@ import CurrrentWeatherCard from "./CurrentWeatherCard";
 import LocationSearch from "./LocationSearch";
 import { getSixDaysWeather } from "../services/api";
 
-export default function CurrentWeather({ currentWeather, setWeatherData }) {
+export default function CurrentWeather({ currentWeather, setWeatherData, tempUnit }) {
   const [searchWeatherData, setSearchWeatherData] = useState({
     time_stamp: "",
     temp: "",
@@ -56,6 +56,7 @@ export default function CurrentWeather({ currentWeather, setWeatherData }) {
         currentWeather={
           searchWeatherData.name ? searchWeatherData : currentWeather
         }
+        tempUnit = {tempUnit}
       />
     </div>
   );

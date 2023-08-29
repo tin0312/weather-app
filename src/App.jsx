@@ -2,6 +2,12 @@ import React, { useState, useEffect } from "react";
 import CurrentWeather from "./components/CurrentWeather";
 import FutureWeather from "./components/FutureWeather";
 import { getSixDaysWeather } from "./services/api";
+import {
+  celsiusToFah,
+  fahToCelsius,
+  kelToCelsius,
+  kelToFah,
+} from "./utils/temperatureUtils";
 
 function App() {
   const [geolocation, setGeolocation] = useState({
@@ -24,6 +30,42 @@ function App() {
     },
     forecast_data: [],
   });
+
+let convertedTemp;
+const [tempUnit, setTempUnit] = useState("Celsius");
+const toogleCelsius = () => {
+  if (tempUnit === "Celsius") {
+    convertedTemp = weatherData.currentWeather.temp
+  } else if (tempUnit === "Fah") {
+    setTempUnit("Celsius");
+    convertedTemp = fahToCelsius(weatherData.currentWeather.temp);
+  }
+  setWeatherData({
+    ...weatherData,
+    currentWeather: {
+      ...weatherData.currentWeather,
+      temp: convertedTemp,
+    },
+  });
+};
+
+const toogleFah = () => {
+  if (tempUnit === "Celsius") {
+    setTempUnit("Fah");
+    convertedTemp = celsiusToFah(weatherData.currentWeather.temp);
+    console.log(convertedTemp)
+ } else if (tempUnit === "Fah"){
+    convertedTemp = weatherData.currentWeather.temp
+  }
+  setWeatherData({
+    ...weatherData,
+    currentWeather: {
+      ...weatherData.currentWeather,
+      temp: convertedTemp,
+    },
+  });
+};
+
 
   useEffect(() => {
     const fetchGeolocation = async () => {
@@ -48,11 +90,12 @@ function App() {
           geolocation.latitude,
           geolocation.longitude
         );
-        const forecastData = currentWeather.list.slice(1)
+        const forecastData = currentWeather.list.slice(1);
+        const defaultTemp = kelToCelsius(currentWeather.list[0].temp.day)
         setWeatherData({
           currentWeather: {
             time_stamp: currentWeather.list[0].dt,
-            temp: currentWeather.list[0].temp.day,
+            temp: defaultTemp,
             weather: currentWeather.list[0].weather[0].main,
             name: currentWeather.city.name,
           },
@@ -71,14 +114,16 @@ function App() {
     };
     fetchWeatherData();
   }, [geolocation]);
-
   return (
     <div className="main-wrapper">
       <CurrentWeather
         currentWeather={weatherData.currentWeather}
         setWeatherData={setWeatherData}
+        tempUnit = {tempUnit}
       />
       <FutureWeather
+        toogleCelsius={toogleCelsius}
+        toogleFah={toogleFah}
         weatherHightLights={weatherData.weatherHightLights}
         forecastData={weatherData.forecast_data}
       />

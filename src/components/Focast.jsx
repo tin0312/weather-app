@@ -1,12 +1,12 @@
 import React from "react";
-import moment from "moment";
 import * as weatherIcon from "../assets"
+import { formattedDate } from "../utils/dateUtils";
 
 export default function Focast({ forecastData }) {
   const forecastCards = forecastData.map((card, index) => {
     const CelsiusMin = (card.temp.min - 273.15).toFixed(0);
     const CelsiusMax = (card.temp.max - 273.15).toFixed(0);
-    const formattedDate = moment.unix(card.dt).utc().format(" ddd, D MMM");
+    const date = formattedDate(card.dt)
     const weatherIcons = 
     card.weather[0].main === "Clear"
       ? weatherIcon.clearIcon
@@ -33,7 +33,7 @@ export default function Focast({ forecastData }) {
       : "";
     return (
       <div key={index} className="future-card">
-        <h3>{index === 0 ? "Tommorow" : formattedDate}</h3>
+        <h3>{index === 0 ? "Tommorow" : date}</h3>
         <img src={weatherIcons} alt="weather-icon" />
         <p>
           {CelsiusMax} °C <span>{CelsiusMin} °C</span>

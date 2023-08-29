@@ -95,7 +95,6 @@ span.material-symbols-outlined {
   width: 35px;
   height: 35px;
   border-radius: 54px;
-  background-color: #e7e7eb;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -107,6 +106,16 @@ span.material-symbols-outlined {
 .F {
   background-color: #585676;
   color: #e7e7eb;
+}
+.F:hover {
+  cursor: pointer; 
+  width: 40px;
+  height: 40px
+}
+.C:hover {
+  cursor: pointer; 
+  width: 40px;
+  height: 40px
 }
 .future-cards {
   width: 70%;

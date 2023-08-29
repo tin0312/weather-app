@@ -1,13 +1,10 @@
 import React from "react";
-import moment from "moment";
+import { formattedDate } from "../utils/dateUtils";
 import * as weatherIcon from "../assets"
 
-
-
-export default function CurrentWeatherCard({ currentWeather }) {
+export default function CurrentWeatherCard({ currentWeather, tempUnit }) {
   const { weather, temp, name, time_stamp } = currentWeather;
-  const CelsiusTemp = (temp - 273.15).toFixed(0);
-  const formattedDate = moment.unix(time_stamp).utc().format(" ddd, D MMM");
+  const date = formattedDate(time_stamp)
   const weatherIcons =
     weather === "Clear"
       ? weatherIcon.clearIcon
@@ -36,11 +33,11 @@ export default function CurrentWeatherCard({ currentWeather }) {
     <div className="currentWeatherCard-wrapper">
       <div className="currenWeatherCard">
         <img src={weatherIcons} alt="weather-icon" />
-        <h1 className="temperature"> {`${CelsiusTemp} °C`} </h1>
+        <h1 className="temperature"> {`${temp} ${tempUnit === "Celsius" ? "°C" : "°F"} `} </h1>
         <h2 className="activity">{weather}</h2>
       </div>
       <div className="date-location">
-        <h3 className="date">{`Today  •   ${formattedDate}`}</h3>
+        <h3 className="date">{`Today  •   ${date}`}</h3>
         <h3 className="location">
           <span className="material-symbols-outlined">location_on</span>
           {name}
