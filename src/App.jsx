@@ -44,7 +44,7 @@ function App() {
       humidity: "",
       air_pressure: "",
     },
-    forecast_data: []
+    forecast_data: [],
   });
 
   let currentUserTemp;
@@ -159,7 +159,7 @@ function App() {
           geolocation.longitude
         );
         const forecastData = currentWeather.list.slice(1);
-        const allTemp = currentWeather.list.map((day) => {
+          const allTemp = currentWeather.list.map((day) => {
           return {
             temp: kelToCelsius(day.temp.day),
             feels_like: kelToCelsius(day.feels_like.day),
@@ -193,8 +193,11 @@ function App() {
   return (
     <div className="main-wrapper">
       <CurrentWeather
-        currentWeather={searchWeatherData.searchCurrentWeather.name ? searchWeatherData.searchCurrentWeather
-        : weatherData.currentWeather } 
+        currentWeather={
+          searchWeatherData.searchCurrentWeather.name
+            ? searchWeatherData.searchCurrentWeather
+            : weatherData.currentWeather
+        }
         searchWeatherData={searchWeatherData}
         setSearchWeatherData={setSearchWeatherData}
         tempUnit={tempUnit}
@@ -203,11 +206,18 @@ function App() {
         tempUnit={tempUnit}
         toogleCelsius={toogleCelsius}
         toogleFah={toogleFah}
-        weatherHightLights={searchWeatherData.searchCurrentWeather.name ? searchWeatherData.searchWeatherHightLights
-          : weatherData.weatherHightLights }
-        forecastData= {searchWeatherData.searchCurrentWeather.name ?
-          searchWeatherData.forecast_data : weatherData.forecast_data
+        weatherHightLights={
+          searchWeatherData.searchCurrentWeather.name
+            ? searchWeatherData.searchWeatherHightLights
+            : weatherData.weatherHightLights
         }
+        forecastData={
+          searchWeatherData.searchCurrentWeather.name
+            ? searchWeatherData.forecast_data
+            : weatherData.forecast_data
+        }
+        allTemp = {weatherData.allTemp}
+        tempUnit={tempUnit}
       />
     </div>
   );
