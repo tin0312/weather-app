@@ -1,7 +1,6 @@
 import React from "react";
-export default function HightLights( { weatherHightLights}) {
+export default function HightLights( { weatherHightLights, tempUnit}) {
   const { wind_speed, wind_direction, humidity, air_pressure, feels_like} = weatherHightLights;
-  const feels_likeC = (feels_like - 273.15).toFixed(0)
     return (
     <div className="today-details">
       <h2 className="hightlight">Today’s Hightlights </h2>
@@ -18,7 +17,7 @@ export default function HightLights( { weatherHightLights}) {
         </div>
         <div className="today-feature" id="visibility">
           <h3>Feel Like</h3>
-          <p> {feels_likeC} °C </p>
+          <p> {`${feels_like} ${tempUnit === "Celsius" ? "°C" : "°F"}`}</p>
         </div>
         <div className="today-feature " id="air">
           <h3>Air Pressure</h3>

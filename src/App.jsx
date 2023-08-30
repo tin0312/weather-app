@@ -6,7 +6,6 @@ import {
   celsiusToFah,
   fahToCelsius,
   kelToCelsius,
-  kelToFah,
 } from "./utils/temperatureUtils";
 
 function App() {
@@ -29,42 +28,56 @@ function App() {
       air_pressure: "",
     },
     forecast_data: [],
+    allTemp: []
   });
 
-let convertedTemp;
-const [tempUnit, setTempUnit] = useState("Celsius");
-const toogleCelsius = () => {
-  if (tempUnit === "Celsius") {
-    convertedTemp = weatherData.currentWeather.temp
-  } else if (tempUnit === "Fah") {
-    setTempUnit("Celsius");
-    convertedTemp = fahToCelsius(weatherData.currentWeather.temp);
-  }
-  setWeatherData({
-    ...weatherData,
-    currentWeather: {
-      ...weatherData.currentWeather,
-      temp: convertedTemp,
-    },
-  });
-};
+  let convertedTempCurrent;
+  let covertedTempHightLights
+  const [tempUnit, setTempUnit] = useState("Celsius");
+  const toogleCelsius = () => {
+    if (tempUnit === "Celsius") {
+      convertedTempCurrent = weatherData.currentWeather.temp
+      covertedTempHightLights = weatherData.currentWeather.temp
+    } else if (tempUnit === "Fah") {
+      setTempUnit("Celsius");
+      convertedTempCurrent = fahToCelsius(weatherData.currentWeather.temp);
+      covertedTempHightLights = weatherData.currentWeather.temp
+    }
+    setWeatherData({
+      ...weatherData,
+      currentWeather: {
+        ...weatherData.currentWeather,
+        temp: convertedTempCurrent,
+      },
+      weatherHightLights: {
+        ...weatherData.weatherHightLights,
+        feels_like: covertedTempHightLights,
+      }
+    });
+  };
 
-const toogleFah = () => {
-  if (tempUnit === "Celsius") {
-    setTempUnit("Fah");
-    convertedTemp = celsiusToFah(weatherData.currentWeather.temp);
-    console.log(convertedTemp)
- } else if (tempUnit === "Fah"){
-    convertedTemp = weatherData.currentWeather.temp
-  }
-  setWeatherData({
-    ...weatherData,
-    currentWeather: {
-      ...weatherData.currentWeather,
-      temp: convertedTemp,
-    },
-  });
-};
+  const toogleFah = () => {
+    if (tempUnit === "Celsius") {
+      setTempUnit("Fah");
+      convertedTempCurrent = celsiusToFah(weatherData.currentWeather.temp);
+      covertedTempHightLights = celsiusToFah(weatherData.currentWeather.temp);
+
+    }else if(tempUnit === "Fah"){
+      convertedTempCurrent = weatherData.currentWeather.temp
+      covertedTempHightLights = weatherData.currentWeather.temp
+    }
+    setWeatherData({
+      ...weatherData,
+      currentWeather: {
+        ...weatherData.currentWeather,
+        temp: convertedTempCurrent,
+        },
+      weatherHightLights: {
+        ...weatherData.weatherHightLights,
+        feels_like: covertedTempHightLights,
+      }
+    })
+  };
 
 
   useEffect(() => {
@@ -91,22 +104,30 @@ const toogleFah = () => {
           geolocation.longitude
         );
         const forecastData = currentWeather.list.slice(1);
-        const defaultTemp = kelToCelsius(currentWeather.list[0].temp.day)
+        const allTemp = currentWeather.list.map(day => {
+          return {
+            temp: kelToCelsius(day.temp.day),
+            feels_like: kelToCelsius(day.feels_like.day),
+            temp_min: kelToCelsius(day.temp.min),
+            temp_max: kelToCelsius(day.temp.max)
+          }
+        })  
         setWeatherData({
           currentWeather: {
             time_stamp: currentWeather.list[0].dt,
-            temp: defaultTemp,
+            temp: allTemp[0].temp,
             weather: currentWeather.list[0].weather[0].main,
             name: currentWeather.city.name,
           },
           weatherHightLights: {
             wind_speed: currentWeather.list[0].speed,
             wind_direction: currentWeather.list[0].deg,
-            feels_like: currentWeather.list[0].feels_like.day,
+            feels_like:allTemp[0].feels_like,
             humidity: currentWeather.list[0].humidity,
             air_pressure: currentWeather.list[0].pressure,
           },
           forecast_data: forecastData,
+          allTemp: allTemp
         });
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -122,6 +143,7 @@ const toogleFah = () => {
         tempUnit = {tempUnit}
       />
       <FutureWeather
+        tempUnit = {tempUnit}
         toogleCelsius={toogleCelsius}
         toogleFah={toogleFah}
         weatherHightLights={weatherData.weatherHightLights}
@@ -130,8 +152,8 @@ const toogleFah = () => {
     </div>
   );
 }
-
 export default App;
+
 /*
 
 Architecture
@@ -162,22 +184,35 @@ Data Flow
 
 -SearchBar -> CurrentWeather -> HightLights -> Forecast
 
-
-
 */
 
 /*
 
-New Layout 
-
-<div d-flex >
-
-  <CurrentWeather>
+New Lay
 
 
-<div>
+*/
+/*
 
+const list = [
+  {temp.day, feels_like.day,  temp.min, temp.max},
+  {temp.day, feels_like.day,  temp.min, temp.max},
+  {temp.day, feels_like.day,  temp.min, temp.max},
+  {temp.day, feels_like.day,  temp.min, temp.max},
+  {temp.day, feels_like.day,  temp.min, temp.max}
+  {temp.day, feels_like.day,  temp.min, temp.max}
+]
 
-
-
+=>>> combine all values of 6 Obj together and put in an array
+*/
+/*
+map through each object and store 4 arrays of each key values in each object in a new object 
+const allTemp = list.map(day => {
+  return {
+    temp: temp.day,
+    feels_like: day.feels_like.day,
+    temp_min: day.temp.min,
+    temp_max: day.temp.max]
+  }
+})  
 */
