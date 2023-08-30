@@ -44,6 +44,7 @@ function App() {
       humidity: "",
       air_pressure: "",
     },
+    forecast_data: []
   });
 
   let currentUserTemp;
@@ -204,7 +205,9 @@ function App() {
         toogleFah={toogleFah}
         weatherHightLights={searchWeatherData.searchCurrentWeather.name ? searchWeatherData.searchWeatherHightLights
           : weatherData.weatherHightLights }
-        forecastData={weatherData.forecast_data}
+        forecastData= {searchWeatherData.searchCurrentWeather.name ?
+          searchWeatherData.forecast_data : weatherData.forecast_data
+        }
       />
     </div>
   );

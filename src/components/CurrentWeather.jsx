@@ -12,6 +12,7 @@ export default function CurrentWeather({ currentWeather, tempUnit, searchWeather
     const fetchSearchWeather = async () => {
       try {
         const searchWeather = await getSixDaysWeather(searchLat, searchLon);
+        const forecastData = searchWeather.list.slice(1)
         const allTemp = searchWeather.list.map((day) => {
           return {
             temp: kelToCelsius(day.temp.day),
@@ -33,7 +34,8 @@ export default function CurrentWeather({ currentWeather, tempUnit, searchWeather
             feels_like: allTemp[0].feels_like,
             humidity: searchWeather.list[0].humidity,
             air_pressure: searchWeather.list[0].pressure,
-          }
+          },
+          forecast_data: forecastData 
         });
       } catch (error) {
         console.error("Error fetching data:", error);
