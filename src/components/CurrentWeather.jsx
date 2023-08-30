@@ -49,9 +49,7 @@ export default function CurrentWeather({ currentWeather, tempUnit, searchWeather
         <span className="material-symbols-outlined">share_location</span>
       </div>
       <CurrrentWeatherCard
-        currentWeather={
-          searchWeatherData.searchCurrentWeather.name ? searchCurrentWeather : currentWeather
-        }
+        currentWeather={currentWeather}
         tempUnit={tempUnit}
       />
     </div>

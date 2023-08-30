@@ -192,7 +192,8 @@ function App() {
   return (
     <div className="main-wrapper">
       <CurrentWeather
-        currentWeather={weatherData.currentWeather}
+        currentWeather={searchWeatherData.searchCurrentWeather.name ? searchWeatherData.searchCurrentWeather
+        : weatherData.currentWeather } 
         searchWeatherData={searchWeatherData}
         setSearchWeatherData={setSearchWeatherData}
         tempUnit={tempUnit}
@@ -201,7 +202,8 @@ function App() {
         tempUnit={tempUnit}
         toogleCelsius={toogleCelsius}
         toogleFah={toogleFah}
-        weatherHightLights={weatherData.weatherHightLights}
+        weatherHightLights={searchWeatherData.searchCurrentWeather.name ? searchWeatherData.searchWeatherHightLights
+          : weatherData.weatherHightLights }
         forecastData={weatherData.forecast_data}
       />
     </div>
