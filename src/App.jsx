@@ -28,58 +28,112 @@ function App() {
       air_pressure: "",
     },
     forecast_data: [],
-    allTemp: []
+    allTemp: [],
+  });
+  const [searchWeatherData, setSearchWeatherData] = useState({
+    searchCurrentWeather: {
+      time_stamp: "",
+      temp: "",
+      weather: "",
+      name: "",
+    },
+    searchWeatherHightLights: {
+      wind_speed: "",
+      wind_direction: "",
+      feels_like: "",
+      humidity: "",
+      air_pressure: "",
+    },
   });
 
-  let convertedTempCurrent;
-  let covertedTempHightLights
+  let currentUserTemp;
+  let currentUserHightLight;
+  let searchTemp;
+  let searchHightLight;
   const [tempUnit, setTempUnit] = useState("Celsius");
   const toogleCelsius = () => {
     if (tempUnit === "Celsius") {
-      convertedTempCurrent = weatherData.currentWeather.temp
-      covertedTempHightLights = weatherData.currentWeather.temp
+      currentUserTemp = weatherData.currentWeather.temp;
+      searchTemp = searchWeatherData.searchCurrentWeather.temp;
+      currentUserHightLight = weatherData.weatherHightLights.feels_like;
+      searchHightLight = searchWeatherData.searchWeatherHightLights.feels_like;
     } else if (tempUnit === "Fah") {
       setTempUnit("Celsius");
-      convertedTempCurrent = fahToCelsius(weatherData.currentWeather.temp);
-      covertedTempHightLights = weatherData.currentWeather.temp
+      currentUserTemp = fahToCelsius(weatherData.currentWeather.temp);
+      searchTemp = fahToCelsius(searchWeatherData.searchCurrentWeather.temp);
+      currentUserHightLight = fahToCelsius(
+        weatherData.weatherHightLights.feels_like
+      );
+      searchHightLight = fahToCelsius(
+        searchWeatherData.searchWeatherHightLights.feels_like
+      );
     }
     setWeatherData({
       ...weatherData,
       currentWeather: {
         ...weatherData.currentWeather,
-        temp: convertedTempCurrent,
+        temp: currentUserTemp,
       },
       weatherHightLights: {
         ...weatherData.weatherHightLights,
-        feels_like: covertedTempHightLights,
-      }
+        feels_like: currentUserHightLight,
+      },
+    });
+    setSearchWeatherData({
+      ...searchWeatherData,
+      searchCurrentWeather: {
+        ...searchWeatherData.searchCurrentWeather,
+        temp: searchTemp,
+      },
+      searchWeatherHightLights: {
+        ...searchWeatherData.searchWeatherHightLights,
+        feels_like: searchHightLight,
+      },
     });
   };
 
   const toogleFah = () => {
     if (tempUnit === "Celsius") {
       setTempUnit("Fah");
-      convertedTempCurrent = celsiusToFah(weatherData.currentWeather.temp);
-      covertedTempHightLights = celsiusToFah(weatherData.currentWeather.temp);
-
-    }else if(tempUnit === "Fah"){
-      convertedTempCurrent = weatherData.currentWeather.temp
-      covertedTempHightLights = weatherData.currentWeather.temp
+      currentUserTemp = celsiusToFah(weatherData.currentWeather.temp);
+      searchTemp = celsiusToFah(searchWeatherData.searchCurrentWeather.temp);
+      currentUserHightLight = celsiusToFah(
+        weatherData.weatherHightLights.feels_like
+      );
+      searchHightLight = celsiusToFah(
+        searchWeatherData.searchWeatherHightLights.feels_like
+      );
+    } else if (tempUnit === "Fah") {
+      currentUserTemp = weatherData.currentWeather.temp;
+      searchTemp = searchWeatherData.searchCurrentWeather.temp;
+      currentUserHightLight = weatherData.weatherHightLights.feels_like;
+      searchHightLight = searchWeatherData.searchWeatherHightLights.feels_like;
     }
     setWeatherData({
       ...weatherData,
       currentWeather: {
         ...weatherData.currentWeather,
-        temp: convertedTempCurrent,
-        },
+        temp: currentUserTemp,
+      },
       weatherHightLights: {
         ...weatherData.weatherHightLights,
-        feels_like: covertedTempHightLights,
-      }
-    })
+        feels_like: currentUserHightLight,
+      },
+    });
+    setSearchWeatherData({
+      ...searchWeatherData,
+      searchCurrentWeather: {
+        ...searchWeatherData.searchCurrentWeather,
+        temp: searchTemp,
+      },
+      searchWeatherHightLights: {
+        ...searchWeatherData.searchWeatherHightLights,
+        feels_like: searchHightLight,
+      },
+    });
   };
 
-
+  // set current users location
   useEffect(() => {
     const fetchGeolocation = async () => {
       try {
@@ -95,7 +149,7 @@ function App() {
     };
     fetchGeolocation();
   }, []);
-
+  // get weather data based on users location
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
@@ -104,14 +158,14 @@ function App() {
           geolocation.longitude
         );
         const forecastData = currentWeather.list.slice(1);
-        const allTemp = currentWeather.list.map(day => {
+        const allTemp = currentWeather.list.map((day) => {
           return {
             temp: kelToCelsius(day.temp.day),
             feels_like: kelToCelsius(day.feels_like.day),
             temp_min: kelToCelsius(day.temp.min),
-            temp_max: kelToCelsius(day.temp.max)
-          }
-        })  
+            temp_max: kelToCelsius(day.temp.max),
+          };
+        });
         setWeatherData({
           currentWeather: {
             time_stamp: currentWeather.list[0].dt,
@@ -122,12 +176,12 @@ function App() {
           weatherHightLights: {
             wind_speed: currentWeather.list[0].speed,
             wind_direction: currentWeather.list[0].deg,
-            feels_like:allTemp[0].feels_like,
+            feels_like: allTemp[0].feels_like,
             humidity: currentWeather.list[0].humidity,
             air_pressure: currentWeather.list[0].pressure,
           },
           forecast_data: forecastData,
-          allTemp: allTemp
+          allTemp: allTemp,
         });
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -139,11 +193,12 @@ function App() {
     <div className="main-wrapper">
       <CurrentWeather
         currentWeather={weatherData.currentWeather}
-        setWeatherData={setWeatherData}
-        tempUnit = {tempUnit}
+        searchWeatherData={searchWeatherData}
+        setSearchWeatherData={setSearchWeatherData}
+        tempUnit={tempUnit}
       />
       <FutureWeather
-        tempUnit = {tempUnit}
+        tempUnit={tempUnit}
         toogleCelsius={toogleCelsius}
         toogleFah={toogleFah}
         weatherHightLights={weatherData.weatherHightLights}

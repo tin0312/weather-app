@@ -2,42 +2,38 @@ import React, { useState } from "react";
 import CurrrentWeatherCard from "./CurrentWeatherCard";
 import LocationSearch from "./LocationSearch";
 import { getSixDaysWeather } from "../services/api";
+import { kelToCelsius } from "../utils/temperatureUtils";
 
-export default function CurrentWeather({ currentWeather, setWeatherData, tempUnit }) {
-  const [searchWeatherData, setSearchWeatherData] = useState({
-    time_stamp: "",
-    temp: "",
-    weather: "",
-    name: "",
-  });
-
+export default function CurrentWeather({ currentWeather, tempUnit, searchWeatherData, setSearchWeatherData }) {
+  
+  const { searchCurrentWeather } = searchWeatherData
   const onSearchChange = (searchData) => {
     const [searchLat, searchLon] = searchData.value.split(" ");
     const fetchSearchWeather = async () => {
       try {
-        const currentWeather = await getSixDaysWeather(searchLat, searchLon);
-        setSearchWeatherData({
-          time_stamp: currentWeather.list[0].dt,
-          temp: currentWeather.list[0].temp.day,
-          weather: currentWeather.list[0].weather[0].main,
-          name: currentWeather.city.name,
+        const searchWeather = await getSixDaysWeather(searchLat, searchLon);
+        const allTemp = searchWeather.list.map((day) => {
+          return {
+            temp: kelToCelsius(day.temp.day),
+            feels_like: kelToCelsius(day.feels_like.day),
+            temp_min: kelToCelsius(day.temp.min),
+            temp_max: kelToCelsius(day.temp.max),
+          };
         });
-        const forecastData = currentWeather.list.slice(1)
-        setWeatherData({
-          currentWeather: {
-            time_stamp: currentWeather.list[0].dt,
-            temp: currentWeather.list[0].temp.day,
-            weather: currentWeather.list[0].weather[0].main,
-            name: currentWeather.city.name,
+        setSearchWeatherData({
+          searchCurrentWeather: {
+            time_stamp: searchWeather.list[0].dt,
+            temp: allTemp[0].temp,
+            weather: searchWeather.list[0].weather[0].main,
+            name: searchWeather.city.name,
           },
-          weatherHightLights: {
-            wind_speed: currentWeather.list[0].speed,
-            wind_direction: currentWeather.list[0].deg,
-            feels_like: currentWeather.list[0].feels_like.day,
-            humidity: currentWeather.list[0].humidity,
-            air_pressure: currentWeather.list[0].pressure,
-          },
-          forecast_data: forecastData,
+          searchWeatherHightLights: {
+            wind_speed: searchWeather.list[0].speed,
+            wind_direction: searchWeather.list[0].deg,
+            feels_like: allTemp[0].feels_like,
+            humidity: searchWeather.list[0].humidity,
+            air_pressure: searchWeather.list[0].pressure,
+          }
         });
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -54,9 +50,9 @@ export default function CurrentWeather({ currentWeather, setWeatherData, tempUni
       </div>
       <CurrrentWeatherCard
         currentWeather={
-          searchWeatherData.name ? searchWeatherData : currentWeather
+          searchWeatherData.searchCurrentWeather.name ? searchCurrentWeather : currentWeather
         }
-        tempUnit = {tempUnit}
+        tempUnit={tempUnit}
       />
     </div>
   );
