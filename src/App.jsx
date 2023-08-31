@@ -24,7 +24,7 @@ function App() {
     },
     weatherHightLights: {
       wind_speed: "",
-      wind_direction: "",
+      wind_degree: "",
       feels_like: "",
       humidity: "",
       air_pressure: "",
@@ -42,7 +42,7 @@ function App() {
     },
     searchWeatherHightLights: {
       wind_speed: "",
-      wind_direction: "",
+      wind_degree: "",
       feels_like: "",
       humidity: "",
       air_pressure: "",
@@ -172,6 +172,7 @@ function App() {
             temp_max: kelToCelsius(day.temp.max),
           };
         });
+        console.log(currentWeather)
         setWeatherData({
           currentWeather: {
             time_stamp: currentWeather.list[0].dt,
@@ -181,7 +182,7 @@ function App() {
           },
           weatherHightLights: {
             wind_speed: currentWeather.list[0].speed,
-            wind_direction: currentWeather.list[0].deg,
+            wind_degree: currentWeather.list[0].deg,
             feels_like: allTemp[0].feels_like,
             humidity: currentWeather.list[0].humidity,
             air_pressure: currentWeather.list[0].pressure,

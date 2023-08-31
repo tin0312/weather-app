@@ -40,7 +40,7 @@ export default function CurrentWeather({
           },
           searchWeatherHightLights: {
             wind_speed: searchWeather.list[0].speed,
-            wind_direction: searchWeather.list[0].deg,
+            wind_degree: searchWeather.list[0].deg,
             feels_like: allTemp[0].feels_like,
             humidity: searchWeather.list[0].humidity,
             air_pressure: searchWeather.list[0].pressure,

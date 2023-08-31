@@ -180,6 +180,78 @@ span.material-symbols-outlined {
   flex-direction: column;
   gap: 20px;
 }
+#wind-direction-arrow{
+  font-size: 24px;
+  margin-right: 10px;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  padding: 5px;
+  background-color: #88869D;
+}
+.N {
+  transform: rotate(0deg);
+}
+
+.NNE {
+  transform: rotate(22.5deg);
+}
+
+.NE {
+  transform: rotate(45deg);
+}
+
+.ENE {
+  transform: rotate(67.5deg);
+}
+
+.E {
+  transform: rotate(90deg);
+}
+
+.ESE {
+  transform: rotate(112.5deg);
+}
+
+.SE {
+  transform: rotate(135deg);
+}
+
+.SSE {
+  transform: rotate(157.5deg);
+}
+
+.S {
+  transform: rotate(180deg);
+}
+
+.SSW {
+  transform: rotate(202.5deg);
+}
+
+.SW {
+  transform: rotate(225deg);
+}
+
+.WSW {
+  transform: rotate(247.5deg);
+}
+
+.W {
+  transform: rotate(270deg);
+}
+
+.WNW {
+  transform: rotate(292.5deg);
+}
+
+.NW {
+  transform: rotate(315deg);
+}
+
+.NNW {
+  transform: rotate(337.5deg);
+}
 #visibility,
 #air {
   height: 159px;
