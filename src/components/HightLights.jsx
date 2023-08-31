@@ -2,6 +2,7 @@ import React from "react";
 export default function HightLights({ weatherHightLights, tempUnit }) {
   const { wind_speed, wind_degree, humidity, air_pressure, feels_like } =
     weatherHightLights;
+    console.log(humidity)
   const wind_direction =
     wind_degree >= 0 && wind_degree < 22.5
       ? "N"
@@ -36,11 +37,11 @@ export default function HightLights({ weatherHightLights, tempUnit }) {
       : wind_degree < 360
       ? "NNW"
       : "N";
- 
-// Render wind_arrow based on wind_degree
+
+// render wind_arrow based on wind_degree
  const arrowClassList = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW","WSW","W","WNW","NW","NNW"];
  const wind_arrow_direction = arrowClassList[Math.floor(wind_degree  / 22.5) % 16 ]
-
+ 
   return (
     <div className="today-details">
       <h2 className="hightlight">Today’s Hightlights </h2>
@@ -56,8 +57,17 @@ export default function HightLights({ weatherHightLights, tempUnit }) {
         <div className="today-feature">
           <h3>Humidity</h3>
           <p> {humidity} %</p>
-          <div className="humidity-bar"></div>
+          <div className="humidity-container">
+           <div className="humidity-labels">
+                <span>0</span>
+                <span>50</span>
+                <span>100</span>
+          </div> 
+          <div className="humidity-bar">
+            <div className="humidity-filled" style = { {width : `${humidity}%`}}></div>
+          </div>
         </div>
+          </div>
         <div className="today-feature" id="visibility">
           <h3>Feel Like</h3>
           <p> {`${feels_like} ${tempUnit === "Celsius" ? "°C" : "°F"}`}</p>
