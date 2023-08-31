@@ -9,10 +9,12 @@ import {
 } from "./utils/temperatureUtils";
 
 function App() {
+// current user location 
   const [geolocation, setGeolocation] = useState({
     latitude: 0,
     longitude: 0,
   });
+  //current user location data
   const [weatherData, setWeatherData] = useState({
     currentWeather: {
       time_stamp: "",
@@ -30,6 +32,7 @@ function App() {
     forecast_data: [],
     allTemp: [],
   });
+  // searched location data
   const [searchWeatherData, setSearchWeatherData] = useState({
     searchCurrentWeather: {
       time_stamp: "",
@@ -47,6 +50,8 @@ function App() {
     forecast_data: [],
   });
 
+
+// toogle Celsius
   let currentUserTemp;
   let currentUserHightLight;
   let searchTemp;
@@ -92,7 +97,7 @@ function App() {
       },
     });
   };
-
+// toogle Fah
   const toogleFah = () => {
     if (tempUnit === "Celsius") {
       setTempUnit("Fah");
@@ -134,7 +139,7 @@ function App() {
     });
   };
 
-  // set current users location
+  // current users location
   useEffect(() => {
     const fetchGeolocation = async () => {
       try {
@@ -150,7 +155,7 @@ function App() {
     };
     fetchGeolocation();
   }, []);
-  // get weather data based on users location
+  // current location weather
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
@@ -198,7 +203,6 @@ function App() {
             ? searchWeatherData.searchCurrentWeather
             : weatherData.currentWeather
         }
-        searchWeatherData={searchWeatherData}
         setSearchWeatherData={setSearchWeatherData}
         tempUnit={tempUnit}
       />

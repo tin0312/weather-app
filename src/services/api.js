@@ -30,8 +30,8 @@ async function getSixDaysWeather(lat, lon) {
   }
 
 export { getSixDaysWeather } 
-/*Setting up Asyn request to load cicies while search*/
 
+// Load all cities
 export const geoApiOptions = {
   method: "GET",
   headers: {
@@ -40,3 +40,21 @@ export const geoApiOptions = {
   },
 };
 export const GEO_API_URL = "https://wft-geo-db.p.rapidapi.com/v1/geo";
+
+export async function loadAllCities(searchData) {
+  const url = `${GEO_API_URL}/cities?limit=10&namePrefix=${searchData}`;
+  try {
+    const response = await fetch(url, geoApiOptions);
+    const locations = await response.json();
+    return {
+      options: locations.data.map(city => {
+        return {
+          value: `${city.latitude} ${city.longitude}`,
+          label: `${city.name}, ${city.countryCode}`
+        }
+      })
+    }
+  } catch (error) {
+    console.log("City data collection failed:", error);
+  }
+}
