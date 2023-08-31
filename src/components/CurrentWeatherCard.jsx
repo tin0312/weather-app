@@ -33,14 +33,14 @@ export default function CurrentWeatherCard({ currentWeather, tempUnit }) {
     <div className="currentWeatherCard-wrapper">
       <div className="currenWeatherCard">
         <img src={weatherIcons} alt="weather-icon" />
-        <h1 className="temperature"> {`${temp} ${tempUnit === "Celsius" ? "°C" : "°F"} `} </h1>
-        <h2 className="activity">{weather}</h2>
+        <h1 className="current-temperature">{temp} <span>{tempUnit === "Celsius" ? "°C" : "°F"}</span></h1>
+        <h2 className="current-weather-condition">{weather}</h2>
       </div>
-      <div className="date-location">
-        <h3 className="date">{`Today  •   ${date}`}</h3>
-        <h3 className="location">
+      <div className="current-date">
+        <h3 className="date"><pre>{`Today • ${date}`}</pre></h3>
+        <h3 className="current-location">
           <span className="material-symbols-outlined">location_on</span>
-          {name}
+            {name}
         </h3>
       </div>
     </div>

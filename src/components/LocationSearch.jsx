@@ -13,10 +13,11 @@ const LocationSearch = ({ onSearchChange }) => {
     setSearch(searchData);
     onSearchChange(searchData);
   };
-
+    
+  
   return (
     <AsyncPaginate
-      className="search-data"
+      className="search-bar"
       placeholder="Search for city"
       debounceTimeout={600}
       value={search}

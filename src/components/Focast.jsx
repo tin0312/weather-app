@@ -35,10 +35,10 @@ export default function Focast({ forecastData, allTemp, tempUnit }) {
         const temp = allTemp[index];
     return (
       <div key={index} className="future-card">
-        <h3>{index === 0 ? "Tommorow" : date}</h3>
+        <h3 className = "future-date">{index === 0 ? "Tommorow" : date}</h3>
         <img src={weatherIcons} alt="weather-icon" />
-          <p>
-            {`${temp.temp_max} ${tempUnit === "Celsius" ? "°C" : "°F"}`}{" "}
+          <p className="temperature-range">
+            <span>{`${temp.temp_max} ${tempUnit === "Celsius" ? "°C" : "°F"}`}{" "}</span>
             <span>{`${temp.temp_min} ${tempUnit === "Celsius" ? "°C" : "°F"}`}</span>
           </p>
       </div>
