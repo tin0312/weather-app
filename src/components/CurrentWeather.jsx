@@ -55,7 +55,7 @@ export default function CurrentWeather({
   };
 
   return (
-    <div className="current-weather">
+    <div className="current-weather-container">
       <div className="search-bar-container">
         <LocationSearch onSearchChange={onSearchChange} />
         <span className="material-symbols-outlined">share_location</span>

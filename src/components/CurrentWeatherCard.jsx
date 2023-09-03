@@ -30,13 +30,13 @@ export default function CurrentWeatherCard({ currentWeather, tempUnit }) {
       ? weatherIcon.thunderstormIcon
       : "";
   return (
-    <div className="currentWeatherCard-wrapper">
-      <div className="currenWeatherCard">
+    <div className="current-weather-display">
+      <div className="current-weather-card">
         <img src={weatherIcons} alt="weather-icon" />
         <h1 className="current-temperature">{temp} <span>{tempUnit === "Celsius" ? "°C" : "°F"}</span></h1>
         <h2 className="current-weather-condition">{weather}</h2>
       </div>
-      <div className="current-date">
+      <div className="current-date-container">
         <h3 className="date"><pre>{`Today • ${date}`}</pre></h3>
         <h3 className="current-location">
           <span className="material-symbols-outlined">location_on</span>

@@ -2,11 +2,11 @@
   margin: 0;
   padding: 0;
 }
-.main-wrapper {
+.main-container {
   display: flex;
   justify-content: space-around;
 }
-.current-weather {
+.current-weather-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -16,6 +16,7 @@
   background-image: url("./assets/Cloud-Bg.png");
   background-repeat: no-repeat;
   background-position: center;
+  font-family: "Raleway" sans-serif;
 }
 .search-bar-container {
   display: flex;
@@ -31,13 +32,11 @@
   height: 40px;
   text-align: center;
   color: #606075;
-  font-family: "Raleway" sans-serif;
   font-size: 18px;
-  font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
-.currentWeatherCard-wrapper {
+.current-weather-display {
   display: flex;
   flex-direction: column;
   height: 90vh;
@@ -45,46 +44,37 @@
   justify-content: center;
   align-items: center;
 }
-.currenWeatherCard {
+.current-weather-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
   height: 75%;
   width: 100%;
+  font-family: "Raleway", sans-serif;
 }
 .current-temperature {
   color: #e7e7eb;
-  font-family: "Raleway", sans-serif;
   font-size: 141px;
-  font-style: normal;
 }
 .current-weather-condition {
-  color: #a09fb1;
   text-align: center;
-  font-family: "Raleway", sans-serif;
   font-size: 36px;
-  font-style: normal;
+  color: #a09fb1;
   font-weight: 600;
   line-height: normal;
 }
 .current-temperature span {
-  color: #a09fb1;
-  font-family: "Raleway", sans-serif;
   font-size: 48px;
-  font-style: normal;
   font-weight: 500;
   line-height: normal;
+  color: #a09fb1;
 }
-.currenWeatherCard img {
+.current-weather-card img {
   width: 150px;
   height: 150px;
 }
-.future-card img {
-  width: 50px;
-  height: 55px;
-}
-.current-date {
+.current-date-container {
   display: flex;
   flex-direction: column;
   height: 25%;
@@ -94,15 +84,11 @@
   gap: 30px;
   color: #88869d;
   font-family: "Raleway", sans-serif;
-  font-style: normal;
   font-weight: 500;
   line-height: normal;
+  font-size: 20px;
 }
 .date {
-  color: #88869d;
-  font-family: "Raleway", sans-serif;
-  font-size: 20px;
-  font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
@@ -112,15 +98,13 @@ span.material-symbols-outlined {
   vertical-align: middle;
 }
 .current-location {
-  color: #88869d;
-  font-family: "Raleway", sans-serif;
-  font-size: 20px;
-  font-style: normal;
   font-weight: 600;
   line-height: normal;
 }
 
-.weather-details {
+/*End of current-weather-container*/
+
+.weather-detail-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
@@ -129,7 +113,8 @@ span.material-symbols-outlined {
   color: #e7e7eb;
   align-items: center;
 }
-.temperature-display {
+/*Start of toogle container*/
+.toogle-container {
   display: flex;
   justify-content: flex-end;
   width: 70%;
@@ -155,19 +140,16 @@ span.material-symbols-outlined {
   background-color: #585676;
   color: #e7e7eb;
 }
-.F:hover {
-  cursor: pointer;
-  width: 40px;
-  height: 40px;
-}
+.F:hover,
 .C:hover {
   cursor: pointer;
   width: 40px;
   height: 40px;
 }
-.future-cards {
+/*Start of future-card-container */
+.future-card-container {
   width: 70%;
-  height: 30vh;
+  height: 20vh;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -181,69 +163,46 @@ span.material-symbols-outlined {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  font-family: "Raleway", sans-serif;
+  color: #e7e7eb;
 }
 .future-date {
-  color: #e7e7eb;
   text-align: center;
-  font-family: "Raleway", sans-serif;
   font-size: 16px;
-  font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
+.future-card img {
+  width: 50px;
+  height: 55px;
+}
 .temperature-range {
-  color: #e7e7eb;
-  font-family: "Raleway", sans-serif;
   font-size: 16px;
-  font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
 .temperature-range span:nth-child(2) {
   color: #a09fb1;
 }
-.today-details {
+/*Start of hightlight container*/
+.hightlight-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
   height: 70vh;
   width: 100%;
-}
-.today-cards h3 {
-  text-align: center;
   font-family: "Raleway", sans-serif;
-  font-size: 16px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-}
-.today-cards p {
-  font-family: "Raleway", sans-serif;
-  font-size: 64px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-}
-.unit {
-  color: #e7e7eb;
-  font-family: "Raleway", sans-serif;
-  font-size: 36px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
 }
 
-.today-details .hightlight {
+.hightlight-container h2 {
   width: 70%;
   margin: 0 auto;
   color: #e7e7eb;
-  font-family: "Raleway", san;
   font-size: 24px;
-  font-style: normal;
   font-weight: 700;
   line-height: normal;
 }
-.today-cards {
+.feature-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
@@ -253,7 +212,7 @@ span.material-symbols-outlined {
   margin: 0 auto;
   align-content: space-between;
 }
-.today-feature {
+.feature-box {
   width: 328px;
   height: 204px;
   background-color: #1e213a;
@@ -262,13 +221,23 @@ span.material-symbols-outlined {
   align-items: center;
   flex-direction: column;
   gap: 20px;
+  font-family: "Raleway", sans-serif;
+  font-weight: 500;
+}
+.feature-box h3 {
+  text-align: center;
+  font-size: 16px;
+}
+.feature-box p {
+  font-size: 64px;
+  font-weight: 700;
+}
+.feature-unit {
+  color: #e7e7eb;
+  font-size: 36px;
 }
 #wind-direction {
-  font-family: "Raleway", sans-serif;
   font-size: 18px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
 }
 #wind-arrow {
   font-size: 24px;
@@ -364,8 +333,8 @@ span.material-symbols-outlined {
   background-color: #ffec65;
   border-radius: 80px;
 }
-#visibility,
-#air {
+#feel-like,
+#air-pressure {
   height: 159px;
 }
 .footer {
@@ -374,7 +343,5 @@ span.material-symbols-outlined {
   text-align: center;
   font-family: "Montserrat", sans-serif;
   font-size: 16px;
-  font-style: normal;
   font-weight: 500;
-  line-height: normal;
 }

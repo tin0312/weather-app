@@ -36,26 +36,24 @@ export default function HightLights({ weatherHightLights, tempUnit }) {
       : wind_degree < 360
       ? "NNW"
       : "N";
-
-// render wind_arrow based on wind_degree
  const arrowClassList = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW","WSW","W","WNW","NW","NNW"];
  const wind_arrow_direction = arrowClassList[Math.floor(wind_degree  / 22.5) % 16 ]
 
   return (
-    <div className="today-details">
-      <h2 className="hightlight">Today’s Hightlights </h2>
-      <div className="today-cards">
-        <div className="today-feature">
+    <div className="hightlight-container">
+      <h2>Today’s Hightlights </h2>
+      <div className="feature-container">
+        <div className="feature-box">
           <h3>Wind status</h3>
-          <p> {wind_speed} <span className="unit">mph</span></p>
+          <p> {wind_speed} <span className="feature-unit">mph</span></p>
           <p id="wind-direction">
             <span id = "wind-arrow" className={` material-symbols-outlined ${wind_arrow_direction}`}>navigation</span>
             {wind_direction}
           </p>
         </div>
-        <div className="today-feature">
+        <div className="feature-box">
           <h3>Humidity</h3>
-          <p> {humidity} <span className="unit">%</span></p>
+          <p> {humidity} <span className="feature-unit">%</span></p>
           <div className="humidity-container">
            <div className="humidity-labels">
                 <h4>0</h4>
@@ -67,13 +65,13 @@ export default function HightLights({ weatherHightLights, tempUnit }) {
           </div>
         </div>
           </div>
-        <div className="today-feature" id="visibility">
+        <div className="feature-box" id="feel-like">
           <h3>Feel Like</h3>
-          <p> {feels_like} <span className="unit">{tempUnit === "Celsius" ? "°C" : "°F"}</span></p>
+          <p> {feels_like} <span className="feature-unit">{tempUnit === "Celsius" ? "°C" : "°F"}</span></p>
         </div>
-        <div className="today-feature " id="air">
+        <div className="feature-box " id="air-pressure">
           <h3>Air Pressure</h3>
-          <p> {air_pressure} <span className="unit">mb</span></p>
+          <p> {air_pressure} <span className="feature-unit">mb</span></p>
         </div>
       </div>
     </div>

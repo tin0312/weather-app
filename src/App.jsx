@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CurrentWeather from "./components/CurrentWeather";
-import FutureWeather from "./components/FutureWeather";
+import WeatherDetails from "./components/WeatherDetails";
 import { getSixDaysWeather } from "./services/api";
 import {
   celsiusToFah,
@@ -172,7 +172,6 @@ function App() {
             temp_max: kelToCelsius(day.temp.max),
           };
         });
-        console.log(currentWeather)
         setWeatherData({
           currentWeather: {
             time_stamp: currentWeather.list[0].dt,
@@ -197,7 +196,7 @@ function App() {
     fetchWeatherData();
   }, [geolocation]);
   return (
-    <div className="main-wrapper">
+    <div className="main-container">
       <CurrentWeather
         currentWeather={
           searchWeatherData.searchCurrentWeather.name
@@ -207,7 +206,7 @@ function App() {
         setSearchWeatherData={setSearchWeatherData}
         tempUnit={tempUnit}
       />
-      <FutureWeather
+      <WeatherDetails
         tempUnit={tempUnit}
         toogleCelsius={toogleCelsius}
         toogleFah={toogleFah}
@@ -222,72 +221,8 @@ function App() {
             : weatherData.forecast_data
         }
         allTemp = {weatherData.allTemp}
-        tempUnit={tempUnit}
       />
     </div>
   );
 }
 export default App;
-
-/*
-
-Architecture
-
-App -> Current Weather + Future Weather
-
-
-CurrentWeather -> SearchBar + CurrentWeatherCard
-
-
-FutureWeather -> WeatherHightLights + FutureWeatherCard
-
-*/
-
-/*
-
-New architecture
-
-- App
-
--> Current Weather(Search Bar +  CurrentWeather + HightLights)
-
--> Focast
-
-Data Flow
-
--Users location -> Current Weather -> HightLights -> Forecast 
-
--SearchBar -> CurrentWeather -> HightLights -> Forecast
-
-*/
-
-/*
-
-New Lay
-
-
-*/
-/*
-
-const list = [
-  {temp.day, feels_like.day,  temp.min, temp.max},
-  {temp.day, feels_like.day,  temp.min, temp.max},
-  {temp.day, feels_like.day,  temp.min, temp.max},
-  {temp.day, feels_like.day,  temp.min, temp.max},
-  {temp.day, feels_like.day,  temp.min, temp.max}
-  {temp.day, feels_like.day,  temp.min, temp.max}
-]
-
-=>>> combine all values of 6 Obj together and put in an array
-*/
-/*
-map through each object and store 4 arrays of each key values in each object in a new object 
-const allTemp = list.map(day => {
-  return {
-    temp: temp.day,
-    feels_like: day.feels_like.day,
-    temp_min: day.temp.min,
-    temp_max: day.temp.max]
-  }
-})  
-*/

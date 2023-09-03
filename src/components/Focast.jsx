@@ -44,5 +44,5 @@ export default function Focast({ forecastData, allTemp, tempUnit }) {
       </div>
     );
   });
-  return <div className="future-cards">{forecastCards}</div>;
+  return <div className="future-card-container">{forecastCards}</div>;
 }
