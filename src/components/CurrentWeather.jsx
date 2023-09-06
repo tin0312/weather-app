@@ -9,9 +9,13 @@ export default function CurrentWeather({
   tempUnit,
   setSearchWeatherData,
 }) {
+  const [locationName, setLocationName] = useState("")
   const onSearchChange = (searchData) => {
     // get lat & lon coords from the searchData
     const [searchLat, searchLon] = searchData.value.split(" ");
+    const [ name] = searchData.label.split(", ")
+    setLocationName(name)
+    console.log(locationName)
     const fetchSearchWeather = async () => {
       try {
         // get searched location weather
@@ -53,7 +57,6 @@ export default function CurrentWeather({
     };
     fetchSearchWeather();
   };
-
   return (
     <div className="current-weather-container">
       <div className="search-bar-container">
@@ -63,6 +66,7 @@ export default function CurrentWeather({
       <CurrrentWeatherCard
         currentWeather={currentWeather}
         tempUnit={tempUnit}
+        locationName = {locationName}
       />
     </div>
   );

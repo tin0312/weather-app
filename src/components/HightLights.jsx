@@ -1,4 +1,5 @@
 import React from "react";
+
 export default function HightLights({ weatherHightLights, tempUnit }) {
   const { wind_speed, wind_degree, humidity, air_pressure, feels_like } =
     weatherHightLights;

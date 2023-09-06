@@ -92,10 +92,11 @@
   font-weight: 500;
   line-height: normal;
 }
-span.material-symbols-outlined {
-  font-size: 30px;
+.material-symbols-outlined {
+  font-size: 40px;
   margin-right: 6px;
   vertical-align: middle;
+
 }
 .current-location {
   font-weight: 600;
@@ -122,6 +123,7 @@ span.material-symbols-outlined {
   align-items: center;
   gap: 10px;
   padding-top: 20px;
+  margin-bottom: 1rem;
 }
 .C,
 .F {
