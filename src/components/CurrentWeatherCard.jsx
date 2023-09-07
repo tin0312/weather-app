@@ -33,24 +33,44 @@ export default function CurrentWeatherCard({
       : weather === "Thunderstorm"
       ? weatherIcon.thunderstormIcon
       : "";
+/*
 
-  const [favPlace, setFavPlace] = useState([]);
-  //handle toggle
+- toogle add 0:haiphong and increase id by 1
+
+- go back and toogle to check 1:haiphong , this fails to add 
+
+- then go to else if to remove the prev element 
+
++ toogle add 0:haiphong and increase id by 1
+
++ toogle add 1: hanoi and increase id by 1; now the id is 2 
+
++ toogle one more would remove 1: hanoi 
+
+*/
+  const [isPinned, setIsPinned] = useState(false);
+  const [locationId, setLocationId] = useState(0);
+  // handle favPlace toogle
   const toogleSavePlaces = () => {
-    if (!favPlace.includes(locationName)) {
-      setFavPlace([...favPlace, locationName]);
-    } else {
-      setFavPlace(favPlace.filter((place) => place !== locationName));
-    }
+    let key = `location ${locationId}`;
+    let prevKey = `location ${locationId - 1}`;
+    setIsPinned(true);
+    // check if current key value doesnt exist and not the same with the prevKey if any
+    if (
+      localStorage.getItem(key) === null &&
+      localStorage.getItem(prevKey) !== JSON.stringify(locationName)
+    ) {
+      // if no add to storage
+      localStorage.setItem(key, JSON.stringify(locationName));
+      setLocationId(locationId + 1);
+      // remove the same element  
+    } else if (localStorage.getItem(prevKey) !== null) {
+      setIsPinned(false);
+      localStorage.removeItem(prevKey);
+      setLocationId(locationId - 1);
+    } 
   };
-console.log(favPlace)
-console.log(favPlace.length)
-  //handle icon
-  const isFavPlace = (locationName) => {
-    return favPlace.includes(locationName);
-  };
-  const isPinned = isFavPlace(locationName)
-  console.log(isPinned)
+
   return (
     <div className="current-weather-display">
       <div className="current-weather-card">
@@ -65,9 +85,15 @@ console.log(favPlace.length)
           <pre>{`Today • ${date}`}</pre>
         </h3>
         <h3 className="current-location">
-          <span onClick = {toogleSavePlaces} className="material-symbols-outlined"> { isPinned ? "pin_drop" : "location_on"}</span>
+          <span
+            onClick={toogleSavePlaces}
+            className="material-symbols-outlined"
+          >
+            {" "}
+            {isPinned ? "pin_drop" : "location_on"}
+          </span>
 
-          {locationName}
+          {name}
         </h3>
       </div>
     </div>
