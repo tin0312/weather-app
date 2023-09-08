@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { formattedDate } from "../utils/dateUtils";
 import * as weatherIcon from "../assets";
 
@@ -33,28 +33,13 @@ export default function CurrentWeatherCard({
       : weather === "Thunderstorm"
       ? weatherIcon.thunderstormIcon
       : "";
-/*
 
-- toogle add 0:haiphong and increase id by 1
-
-- go back and toogle to check 1:haiphong , this fails to add 
-
-- then go to else if to remove the prev element 
-
-+ toogle add 0:haiphong and increase id by 1
-
-+ toogle add 1: hanoi and increase id by 1; now the id is 2 
-
-+ toogle one more would remove 1: hanoi 
-
-*/
   const [isPinned, setIsPinned] = useState(false);
   const [locationId, setLocationId] = useState(0);
+  let key = `location ${locationId}`;
+  let prevKey = `location ${locationId - 1}`;
   // handle favPlace toogle
   const toogleSavePlaces = () => {
-    let key = `location ${locationId}`;
-    let prevKey = `location ${locationId - 1}`;
-    setIsPinned(true);
     // check if current key value doesnt exist and not the same with the prevKey if any
     if (
       localStorage.getItem(key) === null &&
@@ -63,13 +48,32 @@ export default function CurrentWeatherCard({
       // if no add to storage
       localStorage.setItem(key, JSON.stringify(locationName));
       setLocationId(locationId + 1);
-      // remove the same element  
+      setIsPinned(true);
+
+      // remove current elenment
     } else if (localStorage.getItem(prevKey) !== null) {
-      setIsPinned(false);
       localStorage.removeItem(prevKey);
       setLocationId(locationId - 1);
-    } 
+      setIsPinned(false);
+    }
   };
+  // search for added places => isPinned is true
+  const handleSavedPlaces = () => {
+    for (let i = 0; i < localStorage.length; i++) {
+      let key = localStorage.key(i);
+      let storedLocation = localStorage.getItem(key);
+      if (storedLocation === JSON.stringify(locationName)) {
+        setIsPinned(true);
+      } else {
+        setIsPinned(false);
+      }
+    }
+  };
+
+  useEffect(() => {
+    handleSavedPlaces();
+    toogleSavePlaces();
+  }, [locationName]);
 
   return (
     <div className="current-weather-display">
