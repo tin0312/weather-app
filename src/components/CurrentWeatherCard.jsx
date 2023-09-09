@@ -41,33 +41,25 @@ export default function CurrentWeatherCard({
   let prevKey = `location ${locationId - 1}`;
   // handle favPlace toogle
   const toogleSavePlaces = () => {
-    // check if current key value doesnt exist and not the same with the prevKey if any
+    // handle add items 
     if (
       localStorage.getItem(key) === null &&
-      localStorage.getItem(prevKey) !== location
+      localStorage.getItem(prevKey) !== location 
     ) {
       // if no add to storage
-      localStorage.setItem(key, JSON.stringify(locationName));
+      localStorage.setItem(key, location);
       setLocationId(locationId + 1);
       setIsPinned(true);
 
-      // remove current elenment
+      // handle remove item
     } else if (localStorage.getItem(prevKey) !== null) {
       localStorage.removeItem(prevKey);
       setLocationId(locationId - 1);
       setIsPinned(false);
-    }
+    } 
   };
-/* 
--show pin for added places
-current status 
-+ only show pin for index 0 
-+ when search again, lose ability to toogle
 
-
-*/
-
-  const handleSavedPlaces = (location) => {
+  const handleSavedPlaces = () => {
     for (let i = 0; i < localStorage.length; i++) {
       let key = localStorage.key(i);
       let storedLocation = localStorage.getItem(key);
@@ -77,12 +69,12 @@ current status
     }
   };
 
-  
-
+// when the page loads, enable the toogleSavedPlaces for saved places in local storage
   useEffect(() => {
     setIsPinned(false)
-    handleSavedPlaces(location)
+    handleSavedPlaces()
   }, [location]);
+
 
   return (
     <div className="current-weather-display">
