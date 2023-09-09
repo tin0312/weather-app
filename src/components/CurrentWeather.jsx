@@ -15,7 +15,6 @@ export default function CurrentWeather({
     const [searchLat, searchLon] = searchData.value.split(" ");
     const [ name] = searchData.label.split(", ")
     setLocationName(name)
-    console.log(locationName)
     const fetchSearchWeather = async () => {
       try {
         // get searched location weather

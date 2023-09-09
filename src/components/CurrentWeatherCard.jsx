@@ -36,6 +36,7 @@ export default function CurrentWeatherCard({
 
   const [isPinned, setIsPinned] = useState(false);
   const [locationId, setLocationId] = useState(0);
+  let location = JSON.stringify(locationName)
   let key = `location ${locationId}`;
   let prevKey = `location ${locationId - 1}`;
   // handle favPlace toogle
@@ -43,7 +44,7 @@ export default function CurrentWeatherCard({
     // check if current key value doesnt exist and not the same with the prevKey if any
     if (
       localStorage.getItem(key) === null &&
-      localStorage.getItem(prevKey) !== JSON.stringify(locationName)
+      localStorage.getItem(prevKey) !== location
     ) {
       // if no add to storage
       localStorage.setItem(key, JSON.stringify(locationName));
@@ -57,23 +58,31 @@ export default function CurrentWeatherCard({
       setIsPinned(false);
     }
   };
-  // search for added places => isPinned is true
-  const handleSavedPlaces = () => {
+/* 
+-show pin for added places
+current status 
++ only show pin for index 0 
++ when search again, lose ability to toogle
+
+
+*/
+
+  const handleSavedPlaces = (location) => {
     for (let i = 0; i < localStorage.length; i++) {
       let key = localStorage.key(i);
       let storedLocation = localStorage.getItem(key);
-      if (storedLocation === JSON.stringify(locationName)) {
+      if (storedLocation === location) {
         setIsPinned(true);
-      } else {
-        setIsPinned(false);
       }
     }
   };
 
+  
+
   useEffect(() => {
-    handleSavedPlaces();
-    toogleSavePlaces();
-  }, [locationName]);
+    setIsPinned(false)
+    handleSavedPlaces(location)
+  }, [location]);
 
   return (
     <div className="current-weather-display">
