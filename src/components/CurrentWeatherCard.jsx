@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { formattedDate } from "../utils/dateUtils";
 import * as weatherIcon from "../assets";
+import { nanoid } from "nanoid";
 
 export default function CurrentWeatherCard({
   currentWeather,
@@ -34,48 +35,27 @@ export default function CurrentWeatherCard({
       ? weatherIcon.thunderstormIcon
       : "";
 
-  const [isPinned, setIsPinned] = useState(false);
-  const [locationId, setLocationId] = useState(0);
-  let location = JSON.stringify(locationName)
-  let key = `location ${locationId}`;
-  let prevKey = `location ${locationId - 1}`;
-  // handle favPlace toogle
-  const toogleSavePlaces = () => {
-    // handle add items 
-    if (
-      localStorage.getItem(key) === null &&
-      localStorage.getItem(prevKey) !== location 
-    ) {
-      // if no add to storage
-      localStorage.setItem(key, location);
-      setLocationId(locationId + 1);
-      setIsPinned(true);
+ // Initialize location and locationId
+ const location = JSON.stringify(locationName);
+ const [locationId, setLocationId] = useState(() => nanoid());
+ const [isPinned, setIsPinned] = useState(false);
 
-      // handle remove item
-    } else if (localStorage.getItem(prevKey) !== null) {
-      localStorage.removeItem(prevKey);
-      setLocationId(locationId - 1);
-      setIsPinned(false);
-    } 
-  };
+ // Function to check if location is saved in local storage
+ const isLocationSaved = () => localStorage.getItem(location) !== null;
 
-  const handleSavedPlaces = () => {
-    for (let i = 0; i < localStorage.length; i++) {
-      let key = localStorage.key(i);
-      let storedLocation = localStorage.getItem(key);
-      if (storedLocation === location) {
-        setIsPinned(true);
-      }
-    }
-  };
-
-// when the page loads, enable the toogleSavedPlaces for saved places in local storage
-  useEffect(() => {
-    setIsPinned(false)
-    handleSavedPlaces()
-  }, [location]);
-
-
+ // Handle favorite place toggle
+ const toggleSavePlaces = () => {
+   if (!isLocationSaved()) {
+     localStorage.setItem(location, locationId);
+   } else {
+     localStorage.removeItem(location);
+   }
+   setIsPinned(isLocationSaved());
+ }
+ useEffect(() => {
+   setIsPinned(isLocationSaved());
+   setLocationId(nanoid());
+ }, [location]);
   return (
     <div className="current-weather-display">
       <div className="current-weather-card">
@@ -91,7 +71,7 @@ export default function CurrentWeatherCard({
         </h3>
         <h3 className="current-location">
           <span
-            onClick={toogleSavePlaces}
+            onClick={toggleSavePlaces}
             className="material-symbols-outlined"
           >
             {" "}
