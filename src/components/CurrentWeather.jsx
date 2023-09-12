@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CurrrentWeatherCard from "./CurrentWeatherCard";
 import LocationSearch from "./LocationSearch";
+import FavouriteLocations from "./FavourtiteLocations";
 import { getSixDaysWeather } from "../services/api";
 import { kelToCelsius, celsiusToFah } from "../utils/temperatureUtils";
 
@@ -9,12 +10,12 @@ export default function CurrentWeather({
   tempUnit,
   setSearchWeatherData,
 }) {
-  const [locationName, setLocationName] = useState("")
+  const [locationName, setLocationName] = useState("");
   const onSearchChange = (searchData) => {
     // get lat & lon coords from the searchData
     const [searchLat, searchLon] = searchData.value.split(" ");
-    const [ name] = searchData.label.split(", ")
-    setLocationName(name)
+    const [name] = searchData.label.split(", ");
+    setLocationName(name);
     const fetchSearchWeather = async () => {
       try {
         // get searched location weather
@@ -56,17 +57,35 @@ export default function CurrentWeather({
     };
     fetchSearchWeather();
   };
+  // render saved places from local storage
+  const [isOpenned, setIsOpenned] = useState(false);
+  const [favLocations, setFavLocations] = useState([])
+  const handleFavDropdown = () => {
+    let updatedFavLocations = []
+    setIsOpenned((isOpenned) => !isOpenned);
+    for (let i = 0; i < localStorage.length; i++) {
+      let key = JSON.parse(localStorage.key(i));
+      updatedFavLocations.push(key)
+    }
+    setFavLocations(updatedFavLocations)
+  };
   return (
     <div className="current-weather-container">
       <div className="search-bar-container">
         <LocationSearch onSearchChange={onSearchChange} />
-        <span className="material-symbols-outlined">share_location</span>
+        <span onClick={handleFavDropdown} className="material-symbols-outlined">
+          share_location
+        </span>
       </div>
-      <CurrrentWeatherCard
-        currentWeather={currentWeather}
-        tempUnit={tempUnit}
-        locationName = {locationName}
-      />
+      {isOpenned ? (
+        <FavouriteLocations favLocations={favLocations}/>
+      ) : (
+        <CurrrentWeatherCard
+          currentWeather={currentWeather}
+          tempUnit={tempUnit}
+          locationName={locationName}
+        />
+      )}
     </div>
   );
 }

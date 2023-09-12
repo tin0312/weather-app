@@ -37,7 +37,6 @@ export default function CurrentWeatherCard({
 
  // Initialize location and locationId
  const location = JSON.stringify(locationName);
- const [locationId, setLocationId] = useState(() => nanoid());
  const [isPinned, setIsPinned] = useState(false);
 
  // Function to check if location is saved in local storage
@@ -46,7 +45,7 @@ export default function CurrentWeatherCard({
  // Handle favorite place toggle
  const toggleSavePlaces = () => {
    if (!isLocationSaved()) {
-     localStorage.setItem(location, locationId);
+     localStorage.setItem(location, location);
    } else {
      localStorage.removeItem(location);
    }
@@ -54,7 +53,6 @@ export default function CurrentWeatherCard({
  }
  useEffect(() => {
    setIsPinned(isLocationSaved());
-   setLocationId(nanoid());
  }, [location]);
   return (
     <div className="current-weather-display">

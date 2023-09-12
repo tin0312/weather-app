@@ -36,6 +36,19 @@
   font-weight: 500;
   line-height: normal;
 }
+.favourite-locations {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  background-color: #1e213a;
+  border: 1px solid white;
+}
+.favourite-locations:hover{
+  cursor: pointer;
+}
 .current-weather-display {
   display: flex;
   flex-direction: column;
