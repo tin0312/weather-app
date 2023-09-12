@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CurrrentWeatherCard from "./CurrentWeatherCard";
 import LocationSearch from "./LocationSearch";
 import FavouriteLocations from "./FavourtiteLocations";
-import { getSixDaysWeather } from "../services/api";
+import { getSixDaysWeather, getWeatherByCoords } from "../services/api"; // Import the new API function
 import { kelToCelsius, celsiusToFah } from "../utils/temperatureUtils";
 
 export default function CurrentWeather({
@@ -11,17 +11,35 @@ export default function CurrentWeather({
   setSearchWeatherData,
 }) {
   const [locationName, setLocationName] = useState("");
+  const [searchCoords, setSearchCoords] = useState({
+    lat: "",
+    lon: "",
+  });
+  const [savedCoords, setSavedCoords] = useState({
+    lat: "",
+    lon: "",
+  }); // get saved location coords
+  const [isDisplayed, setIsDisplayed] = useState(false); // display saved location weather
+  const [savedLocation, setSavedLocation] = useState(null); // get saved location
+  const [isOpenned, setIsOpenned] = useState(false);
+  const [favLocations, setFavLocations] = useState([]);
+
   const onSearchChange = (searchData) => {
     // get lat & lon coords from the searchData
     const [searchLat, searchLon] = searchData.value.split(" ");
     const [name] = searchData.label.split(", ");
     setLocationName(name);
+    setSearchCoords({
+      lat: searchLat,
+      lon: searchLon,
+    });
     const fetchSearchWeather = async () => {
       try {
         // get searched location weather
         const searchWeather = await getSixDaysWeather(searchLat, searchLon);
-        const forecastData = searchWeather.list.slice(1);
-        const allTemp = searchWeather.list.map((day) => {
+        const weatherData = isDisplayed ? await getWeatherByCoords(savedCoords.lat, savedCoords.lon) : searchWeather;
+        const forecastData = weatherData.list.slice(1);
+        const allTemp = weatherData.list.map((day) => {
           return {
             temp: kelToCelsius(day.temp.day),
             feels_like: kelToCelsius(day.feels_like.day),
@@ -37,17 +55,17 @@ export default function CurrentWeather({
         // set searched location weather
         setSearchWeatherData({
           searchCurrentWeather: {
-            time_stamp: searchWeather.list[0].dt,
+            time_stamp: weatherData.list[0].dt,
             temp: allTemp[0].temp,
-            weather: searchWeather.list[0].weather[0].main,
-            name: searchWeather.city.name,
+            weather: weatherData.list[0].weather[0].main,
+            name: weatherData.city.name,
           },
           searchWeatherHightLights: {
-            wind_speed: searchWeather.list[0].speed,
-            wind_degree: searchWeather.list[0].deg,
+            wind_speed: weatherData.list[0].speed,
+            wind_degree: weatherData.list[0].deg,
             feels_like: allTemp[0].feels_like,
-            humidity: searchWeather.list[0].humidity,
-            air_pressure: searchWeather.list[0].pressure,
+            humidity: weatherData.list[0].humidity,
+            air_pressure: weatherData.list[0].pressure,
           },
           forecast_data: forecastData,
         });
@@ -57,33 +75,69 @@ export default function CurrentWeather({
     };
     fetchSearchWeather();
   };
+
   // render saved places from local storage
-  const [isOpenned, setIsOpenned] = useState(false);
-  const [favLocations, setFavLocations] = useState([])
   const handleFavDropdown = () => {
-    let updatedFavLocations = []
+    let updatedFavLocations = [];
     setIsOpenned((isOpenned) => !isOpenned);
     for (let i = 0; i < localStorage.length; i++) {
-      let key = JSON.parse(localStorage.key(i));
-      updatedFavLocations.push(key)
+      let key = JSON.parse(localStorage.key(i) || "{}");
+      updatedFavLocations.push(key);
     }
-    setFavLocations(updatedFavLocations)
+    setFavLocations(updatedFavLocations);
   };
+
+  const closeFavDropDown = () => {
+    setIsOpenned(false);
+  };
+
+  useEffect(() => {
+    const getSavedCoords = () => {
+      const value = localStorage.getItem(savedLocation || "{}");
+      const { lat, lon } = JSON.parse(value || "{}");
+      setSavedCoords({
+        lat: lat,
+        lon: lon,
+      });
+    };
+
+    getSavedCoords();
+  }, [savedLocation]);
+
   return (
     <div className="current-weather-container">
       <div className="search-bar-container">
         <LocationSearch onSearchChange={onSearchChange} />
-        <span onClick={handleFavDropdown} className="material-symbols-outlined">
-          share_location
-        </span>
+        {!isOpenned ? (
+          <span
+            onClick={handleFavDropdown}
+            className="material-symbols-outlined saved-location"
+          >
+            share_location
+          </span>
+        ) : (
+          <span
+            onClick={closeFavDropDown}
+            className="material-symbols-outlined saved-location"
+          >
+            saved_search
+          </span>
+        )}
       </div>
       {isOpenned ? (
-        <FavouriteLocations favLocations={favLocations}/>
+        <FavouriteLocations
+          favLocations={favLocations}
+          setIsDisplayed={setIsDisplayed}
+          setSavedLocation={setSavedLocation}
+          setIsOpenned={setIsOpenned}
+          setSavedCoords={setSavedCoords} // Pass setSavedCoords to FavouriteLocations
+        />
       ) : (
         <CurrrentWeatherCard
           currentWeather={currentWeather}
           tempUnit={tempUnit}
           locationName={locationName}
+          searchCoords={searchCoords}
         />
       )}
     </div>
