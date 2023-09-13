@@ -19,8 +19,6 @@ export default function CurrentWeather({
     lat: "",
     lon: "",
   }); // get sacved location coords
-  const [savedLocation, setSavedLocation] = useState(null); // get saved location
-  console.log("Saved Location:", savedLocation)
   const [isOpenned, setIsOpenned] = useState(false);
   const [favLocations, setFavLocations] = useState([]);
 
@@ -88,28 +86,25 @@ export default function CurrentWeather({
   const closeFavDropDown = () => {
     setIsOpenned(false);
   };
-// retrieve saved location
+// retrieve saved location &  saved coords
   const handleSavedLocationClick = (location) => {
-    setSavedLocation(location);
     setIsOpenned(false);
+    getSavedCoords(location);
+    console.log(`location: ${location}`)
   };
+//retrive saved coords from localStorage and save it in savedCoords
+  const getSavedCoords = (location) => {
+  const value = localStorage.getItem(JSON.stringify(location));
+  const { lat, lon } = JSON.parse(value || "{}");
+  console.log(`Latitude: ${lat}, Longitude: ${lon}`);
+  setSavedCoords({
+    lat: lat,
+    lon: lon
+  });
+} 
+
+
   
- // Retrieve location coords
-useEffect(() => {
-  const getSavedCoords = () => {
-    console.log(typeof(savedLocation))
-    const value = localStorage.getItem(savedLocation || "{}");
-    const { lat, lon } = JSON.parse(value || "{}");
-    console.log("Latitude:", lat, "Longitude:", lon);
-    setSavedCoords({
-      lat: lat,
-      lon: lon,
-    });
-  };
-  getSavedCoords();
-}, [savedLocation]);
-
-
   return (
     <div className="current-weather-container">
       <div className="search-bar-container">

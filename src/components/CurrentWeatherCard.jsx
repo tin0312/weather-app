@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { formattedDate } from "../utils/dateUtils";
 import * as weatherIcon from "../assets";
-import { nanoid } from "nanoid";
 
 export default function CurrentWeatherCard({
   currentWeather,
@@ -53,6 +52,7 @@ export default function CurrentWeatherCard({
    }
    setIsPinned(isLocationSaved());
  }
+
  useEffect(() => {
    setIsPinned(isLocationSaved());
  }, [favLocation]);
