@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import CurrrentWeatherCard from "./CurrentWeatherCard";
 import LocationSearch from "./LocationSearch";
 import FavouriteLocations from "./FavourtiteLocations";
-import { getSixDaysWeather, getWeatherByCoords } from "../services/api"; // Import the new API function
+import { getSixDaysWeather } from "../services/api";
 import { kelToCelsius, celsiusToFah } from "../utils/temperatureUtils";
 
 export default function CurrentWeather({
@@ -15,12 +15,12 @@ export default function CurrentWeather({
     lat: "",
     lon: "",
   });
-  const [savedCoords, setSavedCoords] = useState({
+  const [saveCoords, setSavedCoords] = useState({
     lat: "",
     lon: "",
-  }); // get saved location coords
-  const [isDisplayed, setIsDisplayed] = useState(false); // display saved location weather
+  }); // get sacved location coords
   const [savedLocation, setSavedLocation] = useState(null); // get saved location
+  console.log("Saved Location:", savedLocation)
   const [isOpenned, setIsOpenned] = useState(false);
   const [favLocations, setFavLocations] = useState([]);
 
@@ -37,9 +37,8 @@ export default function CurrentWeather({
       try {
         // get searched location weather
         const searchWeather = await getSixDaysWeather(searchLat, searchLon);
-        const weatherData = isDisplayed ? await getWeatherByCoords(savedCoords.lat, savedCoords.lon) : searchWeather;
-        const forecastData = weatherData.list.slice(1);
-        const allTemp = weatherData.list.map((day) => {
+        const forecastData = searchWeather.list.slice(1);
+        const allTemp = searchWeather.list.map((day) => {
           return {
             temp: kelToCelsius(day.temp.day),
             feels_like: kelToCelsius(day.feels_like.day),
@@ -55,17 +54,17 @@ export default function CurrentWeather({
         // set searched location weather
         setSearchWeatherData({
           searchCurrentWeather: {
-            time_stamp: weatherData.list[0].dt,
+            time_stamp: searchWeather.list[0].dt,
             temp: allTemp[0].temp,
-            weather: weatherData.list[0].weather[0].main,
-            name: weatherData.city.name,
+            weather: searchWeather.list[0].weather[0].main,
+            name: searchWeather.city.name,
           },
           searchWeatherHightLights: {
-            wind_speed: weatherData.list[0].speed,
-            wind_degree: weatherData.list[0].deg,
+            wind_speed: searchWeather.list[0].speed,
+            wind_degree: searchWeather.list[0].deg,
             feels_like: allTemp[0].feels_like,
-            humidity: weatherData.list[0].humidity,
-            air_pressure: weatherData.list[0].pressure,
+            humidity: searchWeather.list[0].humidity,
+            air_pressure: searchWeather.list[0].pressure,
           },
           forecast_data: forecastData,
         });
@@ -75,7 +74,6 @@ export default function CurrentWeather({
     };
     fetchSearchWeather();
   };
-
   // render saved places from local storage
   const handleFavDropdown = () => {
     let updatedFavLocations = [];
@@ -90,19 +88,27 @@ export default function CurrentWeather({
   const closeFavDropDown = () => {
     setIsOpenned(false);
   };
+// retrieve saved location
+  const handleSavedLocationClick = (location) => {
+    setSavedLocation(location);
+    setIsOpenned(false);
+  };
+  
+ // Retrieve location coords
+useEffect(() => {
+  const getSavedCoords = () => {
+    console.log(typeof(savedLocation))
+    const value = localStorage.getItem(savedLocation || "{}");
+    const { lat, lon } = JSON.parse(value || "{}");
+    console.log("Latitude:", lat, "Longitude:", lon);
+    setSavedCoords({
+      lat: lat,
+      lon: lon,
+    });
+  };
+  getSavedCoords();
+}, [savedLocation]);
 
-  useEffect(() => {
-    const getSavedCoords = () => {
-      const value = localStorage.getItem(savedLocation || "{}");
-      const { lat, lon } = JSON.parse(value || "{}");
-      setSavedCoords({
-        lat: lat,
-        lon: lon,
-      });
-    };
-
-    getSavedCoords();
-  }, [savedLocation]);
 
   return (
     <div className="current-weather-container">
@@ -127,10 +133,7 @@ export default function CurrentWeather({
       {isOpenned ? (
         <FavouriteLocations
           favLocations={favLocations}
-          setIsDisplayed={setIsDisplayed}
-          setSavedLocation={setSavedLocation}
-          setIsOpenned={setIsOpenned}
-          setSavedCoords={setSavedCoords} // Pass setSavedCoords to FavouriteLocations
+          handleSavedLocationClick = {handleSavedLocationClick}
         />
       ) : (
         <CurrrentWeatherCard

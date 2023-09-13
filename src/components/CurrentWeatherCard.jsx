@@ -37,25 +37,25 @@ export default function CurrentWeatherCard({
       : "";
 
  // Initialize location and locationId
- const location = JSON.stringify(locationName);
+ const favLocation = JSON.stringify(locationName);
  const favCoords = JSON.stringify(searchCoords)
  const [isPinned, setIsPinned] = useState(false);
 
  // Function to check if location is saved in local storage
- const isLocationSaved = () => localStorage.getItem(location) !== null;
+ const isLocationSaved = () => localStorage.getItem(favLocation) !== null;
 
  // Handle favorite place toggle
  const toggleSavePlaces = () => {
    if (!isLocationSaved()) {
-     localStorage.setItem(location, favCoords);
+     localStorage.setItem(favLocation, favCoords);
    } else {
-     localStorage.removeItem(location);
+     localStorage.removeItem(favLocation);
    }
    setIsPinned(isLocationSaved());
  }
  useEffect(() => {
    setIsPinned(isLocationSaved());
- }, [location]);
+ }, [favLocation]);
   return (
     <div className="current-weather-display">
       <div className="current-weather-card">
