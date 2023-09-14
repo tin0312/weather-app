@@ -9,6 +9,7 @@ export default function CurrentWeather({
   setSearchCoords,
   searchCoords,
   setSavedCoords,
+  setIsDisplayed
 }) {
   const [locationName, setLocationName] = useState(""); // to save location as key in localStorage
   const [isOpenned, setIsOpenned] = useState(false); // to open current weather display
@@ -51,6 +52,7 @@ export default function CurrentWeather({
       lat: lat,
       lon: lon,
     });
+    setIsDisplayed(false)
   };
 
   return (
@@ -77,6 +79,7 @@ export default function CurrentWeather({
         <FavouriteLocations
           favLocations={favLocations}
           handleSavedLocationClick={handleSavedLocationClick}
+          setIsDisplayed = {setIsDisplayed} 
         />
       ) : (
         <CurrrentWeatherCard

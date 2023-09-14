@@ -8,7 +8,7 @@ import {
   kelToCelsius,
 } from "./utils/temperatureUtils";
 
-function App() {
+function App(){
   // saved weather coords
   const [savedCoords, setSavedCoords] = useState({
     lat: "",
@@ -44,7 +44,8 @@ function App() {
     forecast_data: [],
     allTemp: [],
   });
-
+// display saved weather
+const [isDiplayed, setIsDisplayed] = useState(false)
   // toogle Celsius
   let mainTemp;
   let hightlightTemp;
@@ -127,10 +128,11 @@ function App() {
           currentCoords.lat,
           currentCoords.lon
         );
-        if (searchCoords.lat && searchCoords.lon ) {
+        if (isDiplayed){
+            weatherSource = savedWeather
+            setIsDisplayed(false)
+        } else if (searchCoords.lat && searchCoords.lon ) {
           weatherSource = searchWeather;
-        } else if (savedCoords.lat && savedCoords.lon ) {
-          weatherSource = savedWeather;
         } else {
           weatherSource = currentWeather;
         } 
@@ -176,6 +178,7 @@ function App() {
         setSearchCoords={setSearchCoords}
         searchCoords={searchCoords}
         setSavedCoords={setSavedCoords}
+        setIsDisplayed = {setIsDisplayed}
       />
       <WeatherDetails
         tempUnit={tempUnit}

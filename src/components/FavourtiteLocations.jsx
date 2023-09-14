@@ -2,10 +2,12 @@ import React from "react";
 
 export default function FavouriteLocations({
   favLocations,
-  handleSavedLocationClick
+  handleSavedLocationClick,
+  setIsDisplayed
 }) {
   const handleLocationClick = (location) => {
     handleSavedLocationClick(location)
+    setIsDisplayed(true)
   };
   return (
     <div>
