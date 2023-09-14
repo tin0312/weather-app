@@ -9,12 +9,24 @@ import {
 } from "./utils/temperatureUtils";
 
 function App() {
-// current user location 
-  const [geolocation, setGeolocation] = useState({
-    latitude: 0,
-    longitude: 0,
+  // saved weather coords
+  const [savedCoords, setSavedCoords] = useState({
+    lat: "",
+    lon: "",
   });
-  //current user location data
+
+  // search weather coords
+  const [searchCoords, setSearchCoords] = useState({
+    lat: "",
+    lon: "",
+  });
+
+  // current user location
+  const [currentCoords, setCurrentCoords] = useState({
+    lat: 0,
+    lon: 0,
+  });
+
   const [weatherData, setWeatherData] = useState({
     currentWeather: {
       time_stamp: "",
@@ -32,121 +44,63 @@ function App() {
     forecast_data: [],
     allTemp: [],
   });
-  // searched location data
-  const [searchWeatherData, setSearchWeatherData] = useState({
-    searchCurrentWeather: {
-      time_stamp: "",
-      temp: "",
-      weather: "",
-      name: "",
-    },
-    searchWeatherHightLights: {
-      wind_speed: "",
-      wind_degree: "",
-      feels_like: "",
-      humidity: "",
-      air_pressure: "",
-    },
-    forecast_data: [],
-  });
 
-
-// toogle Celsius
-  let currentUserTemp;
-  let currentUserHightLight;
-  let searchTemp;
-  let searchHightLight;
+  // toogle Celsius
+  let mainTemp;
+  let hightlightTemp;
   const [tempUnit, setTempUnit] = useState("Celsius");
   const toogleCelsius = () => {
     if (tempUnit === "Celsius") {
-      currentUserTemp = weatherData.currentWeather.temp;
-      searchTemp = searchWeatherData.searchCurrentWeather.temp;
-      currentUserHightLight = weatherData.weatherHightLights.feels_like;
-      searchHightLight = searchWeatherData.searchWeatherHightLights.feels_like;
+      mainTemp = weatherData.currentWeather.temp;
+      hightlightTemp = weatherData.weatherHightLights.feels_like;
     } else if (tempUnit === "Fah") {
       setTempUnit("Celsius");
-      currentUserTemp = fahToCelsius(weatherData.currentWeather.temp);
-      searchTemp = fahToCelsius(searchWeatherData.searchCurrentWeather.temp);
-      currentUserHightLight = fahToCelsius(
-        weatherData.weatherHightLights.feels_like
-      );
-      searchHightLight = fahToCelsius(
-        searchWeatherData.searchWeatherHightLights.feels_like
-      );
+      mainTemp = fahToCelsius(weatherData.currentWeather.temp);
+      hightlightTemp = fahToCelsius(weatherData.weatherHightLights.feels_like);
     }
     setWeatherData({
       ...weatherData,
       currentWeather: {
         ...weatherData.currentWeather,
-        temp: currentUserTemp,
+        temp: mainTemp,
       },
       weatherHightLights: {
         ...weatherData.weatherHightLights,
-        feels_like: currentUserHightLight,
-      },
-    });
-    setSearchWeatherData({
-      ...searchWeatherData,
-      searchCurrentWeather: {
-        ...searchWeatherData.searchCurrentWeather,
-        temp: searchTemp,
-      },
-      searchWeatherHightLights: {
-        ...searchWeatherData.searchWeatherHightLights,
-        feels_like: searchHightLight,
+        feels_like: hightlightTemp,
       },
     });
   };
-// toogle Fah
+  // toogle Fah
   const toogleFah = () => {
     if (tempUnit === "Celsius") {
       setTempUnit("Fah");
-      currentUserTemp = celsiusToFah(weatherData.currentWeather.temp);
-      searchTemp = celsiusToFah(searchWeatherData.searchCurrentWeather.temp);
-      currentUserHightLight = celsiusToFah(
-        weatherData.weatherHightLights.feels_like
-      );
-      searchHightLight = celsiusToFah(
-        searchWeatherData.searchWeatherHightLights.feels_like
-      );
+      mainTemp = celsiusToFah(weatherData.currentWeather.temp);
+      hightlightTemp = celsiusToFah(weatherData.weatherHightLights.feels_like);
     } else if (tempUnit === "Fah") {
-      currentUserTemp = weatherData.currentWeather.temp;
-      searchTemp = searchWeatherData.searchCurrentWeather.temp;
-      currentUserHightLight = weatherData.weatherHightLights.feels_like;
-      searchHightLight = searchWeatherData.searchWeatherHightLights.feels_like;
+      mainTemp = weatherData.currentWeather.temp;
+      hightlightTemp = weatherData.weatherHightLights.feels_like;
     }
     setWeatherData({
       ...weatherData,
       currentWeather: {
         ...weatherData.currentWeather,
-        temp: currentUserTemp,
+        temp: mainTemp,
       },
       weatherHightLights: {
         ...weatherData.weatherHightLights,
-        feels_like: currentUserHightLight,
-      },
-    });
-    setSearchWeatherData({
-      ...searchWeatherData,
-      searchCurrentWeather: {
-        ...searchWeatherData.searchCurrentWeather,
-        temp: searchTemp,
-      },
-      searchWeatherHightLights: {
-        ...searchWeatherData.searchWeatherHightLights,
-        feels_like: searchHightLight,
+        feels_like: hightlightTemp,
       },
     });
   };
 
-  // current users location
+  // get current location
   useEffect(() => {
     const fetchGeolocation = async () => {
       try {
         navigator.geolocation.getCurrentPosition((position) => {
-          setGeolocation({
-            latitude: position.coords.latitude,
-            longitude: position.coords.longitude,
+          setCurrentCoords({
+            lat: position.coords.latitude,
+            lon: position.coords.longitude,
           });
         });
       } catch (error) {
@@ -155,16 +109,34 @@ function App() {
     };
     fetchGeolocation();
   }, []);
-  // current location weather
+
+  // get weather data
   useEffect(() => {
     const fetchWeatherData = async () => {
       try {
-        const currentWeather = await getSixDaysWeather(
-          geolocation.latitude,
-          geolocation.longitude
+        let weatherSource = null;
+        const savedWeather = await getSixDaysWeather(
+          savedCoords.lat,
+          savedCoords.lon
         );
-        const forecastData = currentWeather.list.slice(1);
-          const allTemp = currentWeather.list.map((day) => {
+        const searchWeather = await getSixDaysWeather(
+          searchCoords.lat,
+          searchCoords.lon
+        );
+        const currentWeather = await getSixDaysWeather(
+          currentCoords.lat,
+          currentCoords.lon
+        );
+        if (searchCoords.lat && searchCoords.lon ) {
+          weatherSource = searchWeather;
+        } else if (savedCoords.lat && savedCoords.lon ) {
+          weatherSource = savedWeather;
+        } else {
+          weatherSource = currentWeather;
+        } 
+
+        const forecastData = weatherSource.list.slice(1);
+        const allTemp = weatherSource.list.map((day) => {
           return {
             temp: kelToCelsius(day.temp.day),
             feels_like: kelToCelsius(day.feels_like.day),
@@ -174,17 +146,17 @@ function App() {
         });
         setWeatherData({
           currentWeather: {
-            time_stamp: currentWeather.list[0].dt,
+            time_stamp: weatherSource.list[0].dt,
             temp: allTemp[0].temp,
-            weather: currentWeather.list[0].weather[0].main,
-            name: currentWeather.city.name,
+            weather: weatherSource.list[0].weather[0].main,
+            name: weatherSource.city.name,
           },
           weatherHightLights: {
-            wind_speed: currentWeather.list[0].speed,
-            wind_degree: currentWeather.list[0].deg,
+            wind_speed: weatherSource.list[0].speed,
+            wind_degree: weatherSource.list[0].deg,
             feels_like: allTemp[0].feels_like,
-            humidity: currentWeather.list[0].humidity,
-            air_pressure: currentWeather.list[0].pressure,
+            humidity: weatherSource.list[0].humidity,
+            air_pressure: weatherSource.list[0].pressure,
           },
           forecast_data: forecastData,
           allTemp: allTemp,
@@ -194,33 +166,24 @@ function App() {
       }
     };
     fetchWeatherData();
-  }, [geolocation]);
+  }, [currentCoords, searchCoords, savedCoords]);
+
   return (
     <div className="main-container">
       <CurrentWeather
-        currentWeather={
-          searchWeatherData.searchCurrentWeather.name
-            ? searchWeatherData.searchCurrentWeather
-            : weatherData.currentWeather
-        }
-        setSearchWeatherData={setSearchWeatherData}
+        currentWeather={weatherData.currentWeather}
         tempUnit={tempUnit}
+        setSearchCoords={setSearchCoords}
+        searchCoords={searchCoords}
+        setSavedCoords={setSavedCoords}
       />
       <WeatherDetails
         tempUnit={tempUnit}
         toogleCelsius={toogleCelsius}
         toogleFah={toogleFah}
-        weatherHightLights={
-          searchWeatherData.searchCurrentWeather.name
-            ? searchWeatherData.searchWeatherHightLights
-            : weatherData.weatherHightLights
-        }
-        forecastData={
-          searchWeatherData.searchCurrentWeather.name
-            ? searchWeatherData.forecast_data
-            : weatherData.forecast_data
-        }
-        allTemp = {weatherData.allTemp}
+        weatherHightLights={weatherData.weatherHightLights}
+        forecastData={weatherData.forecast_data}
+        allTemp={weatherData.allTemp}
       />
     </div>
   );

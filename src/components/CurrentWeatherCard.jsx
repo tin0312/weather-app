@@ -6,7 +6,7 @@ export default function CurrentWeatherCard({
   currentWeather,
   tempUnit,
   locationName,
-  searchCoords
+  searchCoords,
 }) {
   const { weather, temp, name, time_stamp } = currentWeather;
   const date = formattedDate(time_stamp);
