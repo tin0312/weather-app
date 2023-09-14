@@ -41,6 +41,7 @@ export default function CurrentWeather({
   };
   // retrieve saved location &  saved coords
   const handleSavedLocationClick = (location) => {
+    setLocationName(location)
     setIsOpenned(false);
     getSavedCoords(location);
   };
@@ -52,7 +53,6 @@ export default function CurrentWeather({
       lat: lat,
       lon: lon,
     });
-    setIsDisplayed(false)
   };
 
   return (
