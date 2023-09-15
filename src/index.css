@@ -42,20 +42,20 @@
   flex-direction: column;
   align-items: center;
   overflow: hidden;
-  color: #A09FB1;
+  color: #a09fb1;
   font-size: 22px;
   font-family: "Raleway" sans-serif;
 }
-.favourite-locations li{
+.favourite-locations li {
   list-style: none;
   padding-top: 10%;
 }
 .favourite-locations li:hover {
   cursor: pointer;
-  color: #E7E7EB;
+  color: #e7e7eb;
   font-weight: 700;
 }
-.saved-location:hover{
+.saved-location:hover {
   cursor: pointer;
   font-weight: 700;
   height: 50px;
@@ -120,7 +120,6 @@
   font-size: 40px;
   margin-right: 6px;
   vertical-align: middle;
-
 }
 .current-location {
   font-weight: 600;
@@ -175,7 +174,7 @@
 /*Start of future-card-container */
 .future-card-container {
   width: 70%;
-  height: 20vh;
+  height: 20%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -209,14 +208,13 @@
 }
 .temperature-range span:nth-child(2) {
   color: #a09fb1;
+  padding-left: 4px;
 }
 /*Start of hightlight container*/
 .hightlight-container {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  height: 70vh;
-  width: 100%;
   font-family: "Raleway", sans-serif;
 }
 
@@ -364,10 +362,59 @@
   height: 159px;
 }
 .footer {
+  margin-top: 14%;
   margin-bottom: 25px;
   color: #a09fb1;
   text-align: center;
   font-family: "Montserrat", sans-serif;
   font-size: 16px;
   font-weight: 500;
+}
+#author-name{
+  text-decoration-line: underline;
+  padding-left: 3px;
+  padding-right: 3px;
+}
+/* mobile device style*/
+
+@media only screen and (max-width: 767px) {
+  .main-container {
+    flex-direction: column;
+  }
+  .current-weather-container,
+  .weather-detail-container {
+    width: 100vw;
+    height: auto;
+  }
+  .future-card-container {
+    flex-wrap: wrap;
+    height: auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    justify-content: space-between;
+    align-content: space-between;
+  }
+  .future-card {
+    width: 120px;
+    height: 177px;
+    margin-bottom: 25px;
+  }
+  .future-card:last-child{
+    margin-bottom: 0;
+  }
+  .temperature-range span:nth-child(2) {
+    padding-left: 10px;
+  }
+  .feature-container {
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    gap: 50px;
+    margin: 0 auto;
+  }
+  .footer {
+    font-size: 12px;
+ 
+  }
+ 
 }
