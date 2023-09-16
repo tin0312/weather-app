@@ -30,9 +30,6 @@ This weather app allows users to be able to see theit current weather and weathe
 [Solution URL](https://github.com/tin0312/weather-app)
 
 
-- Experiences
-- Take away
-
 ### Built With
 
 - Javascript
