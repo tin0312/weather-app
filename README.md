@@ -96,6 +96,5 @@ $ npm run dev
 ## Author
 
 - Hoang Nhat Truong
-- Website [your-website.com](https://{your-web-site-link})
 - GitHub [@tin0312](https://github.com/tin0312)
 - Twitter [@justin_hppp](https://twitter.com/justin_hppp)
