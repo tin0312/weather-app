@@ -121,6 +121,13 @@
   margin-right: 6px;
   vertical-align: middle;
 }
+.pinned-icon{
+  color: red;
+}
+.current-date-container .material-symbols-outlined:hover{
+  cursor: pointer;
+  color: red;
+}
 .current-location {
   font-weight: 600;
   line-height: normal;
@@ -145,8 +152,7 @@
   height: 10%;
   align-items: center;
   gap: 10px;
-  padding-top: 20px;
-  margin-bottom: 1rem;
+  padding-top: 5%;
 }
 .C,
 .F {
@@ -179,6 +185,7 @@
   justify-content: space-around;
   align-items: center;
   margin-bottom: 72px;
+  margin-top: 7%;
 }
 .future-card {
   width: 140px;

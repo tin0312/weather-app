@@ -35,27 +35,27 @@ export default function CurrentWeatherCard({
       ? weatherIcon.thunderstormIcon
       : "";
 
- // Initialize location and locationId
- const favLocation = JSON.stringify(locationName);
- const favCoords = JSON.stringify(searchCoords)
- const [isPinned, setIsPinned] = useState(false);
+  // Initialize location and locationId
+  const favLocation = JSON.stringify(locationName);
+  const favCoords = JSON.stringify(searchCoords);
+  const [isPinned, setIsPinned] = useState(false);
 
- // Function to check if location is saved in local storage
- const isLocationSaved = () => localStorage.getItem(favLocation) !== null;
+  // Function to check if location is saved in local storage
+  const isLocationSaved = () => localStorage.getItem(favLocation) !== null;
 
- // Handle favorite place toggle
- const toggleSavePlaces = () => {
-   if (!isLocationSaved()) {
-     localStorage.setItem(favLocation, favCoords);
-   } else {
-     localStorage.removeItem(favLocation);
-   }
-   setIsPinned(isLocationSaved());
- }
+  // Handle favorite place toggle
+  const toggleSavePlaces = () => {
+    if (!isLocationSaved()) {
+      localStorage.setItem(favLocation, favCoords);
+    } else {
+      localStorage.removeItem(favLocation);
+    }
+    setIsPinned(isLocationSaved());
+  };
 
- useEffect(() => {
-   setIsPinned(isLocationSaved());
- }, [favLocation]);
+  useEffect(() => {
+    setIsPinned(isLocationSaved());
+  }, [favLocation]);
   return (
     <div className="current-weather-display">
       <div className="current-weather-card">
@@ -72,7 +72,7 @@ export default function CurrentWeatherCard({
         <h3 className="current-location">
           <span
             onClick={toggleSavePlaces}
-            className="material-symbols-outlined"
+            className={`${isPinned ? "material-symbols-outlined pinned-icon" : "material-symbols-outlined location"}`}
           >
             {" "}
             {isPinned ? "pin_drop" : "location_on"}
@@ -84,3 +84,4 @@ export default function CurrentWeatherCard({
     </div>
   );
 }
+
