@@ -19,7 +19,8 @@ export default function CurrentWeather({
     // get lat & lon coords from the searchData
     const [searchLat, searchLon] = searchData.value.split(" ");
     const [name] = searchData.label.split(", ");
-    setLocationName(name);
+      setLocationName(name)
+    
     setSearchCoords({
       lat: searchLat,
       lon: searchLon,

@@ -13,7 +13,6 @@ const LocationSearch = ({ onSearchChange }) => {
     setSearch(searchData);
     onSearchChange(searchData);
   };
-
   return (
     <AsyncPaginate
       className="search-bar"

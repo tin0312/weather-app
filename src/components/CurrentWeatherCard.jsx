@@ -40,18 +40,19 @@ export default function CurrentWeatherCard({
   const favCoords = JSON.stringify(searchCoords);
   const [isPinned, setIsPinned] = useState(false);
 
-  // Function to check if location is saved in local storage
+  // check if location is saved in local storage
   const isLocationSaved = () => localStorage.getItem(favLocation) !== null;
-
-  // Handle favorite place toggle
-  const toggleSavePlaces = () => {
+// Handle favorite place toggle
+const toggleSavePlaces = () => {
+  if (locationName !== "") { // Check if locationName is not an empty string
     if (!isLocationSaved()) {
       localStorage.setItem(favLocation, favCoords);
     } else {
       localStorage.removeItem(favLocation);
     }
     setIsPinned(isLocationSaved());
-  };
+  }
+};
 
   useEffect(() => {
     setIsPinned(isLocationSaved());
@@ -72,12 +73,12 @@ export default function CurrentWeatherCard({
         <h3 className="current-location">
           <span
             onClick={toggleSavePlaces}
-            className={`${isPinned ? "material-symbols-outlined pinned-icon" : "material-symbols-outlined location"}`}
+            className={`${isPinned  ? "material-symbols-outlined pinned-icon" : "material-symbols-outlined location"}`}
           >
             {" "}
             {isPinned ? "pin_drop" : "location_on"}
           </span>
-
+ 
           {name}
         </h3>
       </div>
