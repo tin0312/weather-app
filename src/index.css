@@ -154,7 +154,7 @@
   gap: 10px;
   padding-top: 5%;
 }
-.C,
+/* .C,
 .F {
   width: 35px;
   height: 35px;
@@ -176,7 +176,74 @@
   cursor: pointer;
   width: 40px;
   height: 40px;
+} */
+
+.knobs,
+.layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
 }
+/* container of the switch */
+.toogle-switch {
+  position: relative;
+  top: 50%;
+  width: 80px;
+  height: 36px;
+  overflow: hidden;
+}
+
+.checkbox {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  opacity: 0 ;
+  cursor: pointer;
+  z-index: 3;
+}
+
+.knobs {
+  z-index: 2;
+}
+
+.layer {
+  width: 100%;
+  background-color: #1E213A;
+  transition: 0.3s ease all;
+  z-index: 1;
+  border-radius: 100px;
+}
+
+/* Button 1 */
+#button-1 .knobs:before {
+  content: "°C";
+  position: absolute;
+  top: 4px;
+  left: 0;
+  width: 20px;
+  height: 10px;
+  color: black;
+  font-size: 10px;
+  font-weight: bold;
+  text-align: center;
+  line-height: 1;
+  padding: 9px 4px;
+  background-color: #E7E7EB;
+  border-radius: 50%;
+  transition: 0.3s cubic-bezier(0.18, 0.89, 0.35, 1.15) all;
+}
+
+#button-1 .checkbox:checked + .knobs:before {
+  content: "°F";
+  left: 50px;
+  background-color: #585676;
+  color: #E7E7EB;
+}
+
 /*Start of future-card-container */
 .future-card-container {
   width: 70%;
