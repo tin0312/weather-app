@@ -10,7 +10,6 @@ export default function CurrentWeather({
   searchCoords,
   setSavedCoords,
   setIsDisplayed,
-  currentName
 }) {
   const [locationName, setLocationName] = useState(""); // to save location as key in localStorage
   const [isOpenned, setIsOpenned] = useState(false); // to open current weather display
@@ -88,7 +87,6 @@ export default function CurrentWeather({
           tempUnit={tempUnit}
           locationName={locationName}
           searchCoords={searchCoords}
-          currentName = {currentName}
         />
       )}
     </div>

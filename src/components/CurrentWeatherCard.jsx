@@ -7,7 +7,6 @@ export default function CurrentWeatherCard({
   tempUnit,
   locationName,
   searchCoords,
-  currentName
 }) {
   const { weather, temp, name, time_stamp } = currentWeather;
   const date = formattedDate(time_stamp);
@@ -46,7 +45,7 @@ export default function CurrentWeatherCard({
 
   // Handle favorite place toggle
   const toggleSavePlaces = () => {
-    if (!isLocationSaved() && !currentName ) {
+    if (!isLocationSaved()) {
       localStorage.setItem(favLocation, favCoords);
     } else {
       localStorage.removeItem(favLocation);

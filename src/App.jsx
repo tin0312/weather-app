@@ -179,7 +179,6 @@ const [isDiplayed, setIsDisplayed] = useState(false)
         searchCoords={searchCoords}
         setSavedCoords={setSavedCoords}
         setIsDisplayed = {setIsDisplayed}
-        currentName = {weatherData.currentWeather.name}
       />
       <WeatherDetails
         tempUnit={tempUnit}
