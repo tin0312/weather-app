@@ -11,16 +11,16 @@ export default function CurrentWeather({
   setSavedCoords,
   setIsDisplayed,
 }) {
-  const [locationName, setLocationName] = useState(""); // to save location as key in localStorage
-  const [isOpenned, setIsOpenned] = useState(false); // to open current weather display
-  const [favLocations, setFavLocations] = useState([]); // store all pinnned locations
+  const [locationName, setLocationName] = useState(""); // save locations in localStorage
+  const [isOpenned, setIsOpenned] = useState(false); // open saved weather
+  const [favLocations, setFavLocations] = useState([]); // save pinnned locations
 
   const onSearchChange = (searchData) => {
     // get lat & lon coords from the searchData
     const [searchLat, searchLon] = searchData.value.split(" ");
     const [name] = searchData.label.split(", ");
-      setLocationName(name)
-    
+    setLocationName(name);
+
     setSearchCoords({
       lat: searchLat,
       lon: searchLon,
@@ -42,7 +42,7 @@ export default function CurrentWeather({
   };
   // retrieve saved location &  saved coords
   const handleSavedLocationClick = (location) => {
-    setLocationName(location)
+    setLocationName(location);
     setIsOpenned(false);
     getSavedCoords(location);
   };
@@ -58,29 +58,17 @@ export default function CurrentWeather({
 
   return (
     <div className="current-weather-container">
-      <div className="search-bar-container">
-        <LocationSearch onSearchChange={onSearchChange} />
-        {!isOpenned ? (
-          <span
-            onClick={handleFavDropdown}
-            className="material-symbols-outlined saved-location"
-          >
-            share_location
-          </span>
-        ) : (
-          <span
-            onClick={closeFavDropDown}
-            className="material-symbols-outlined saved-location"
-          >
-            saved_search
-          </span>
-        )}
-      </div>
+        <LocationSearch
+          onSearchChange={onSearchChange}
+          isOpenned={isOpenned}
+          handleFavDropdown={handleFavDropdown}
+          closeFavDropDown={closeFavDropDown}
+        />
       {isOpenned ? (
         <FavouriteLocations
           favLocations={favLocations}
           handleSavedLocationClick={handleSavedLocationClick}
-          setIsDisplayed = {setIsDisplayed} 
+          setIsDisplayed={setIsDisplayed}
         />
       ) : (
         <CurrrentWeatherCard
