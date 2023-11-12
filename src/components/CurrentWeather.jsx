@@ -89,12 +89,3 @@ export default function CurrentWeather({
   );
 }
 
-/*
-
-hover => searchWindow => display search button  
-
-hover => searchWindow => display search button and hide the current user location weather
-
-false => true => dont render, only render when false
-
-*/

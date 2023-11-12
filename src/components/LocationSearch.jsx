@@ -18,15 +18,14 @@ const LocationSearch = ({
 
   const handleOnChange = (searchData) => {
     setSearch(searchData);
-  
   };
   const handleOnFocus = () => {
     setSearchWindow(true);
   };
   const handleSearch = () => {
     onSearchChange(search);
-    setSearchWindow(false)
-  }
+    setSearchWindow(false);
+  };
   const customStyles = {
     control: (baseStyles, state) => ({
       ...baseStyles,
@@ -45,6 +44,7 @@ const LocationSearch = ({
     placeholder: (baseStyles, state) => ({
       ...baseStyles,
       color: state.isFocused ? "#616475" : "#E7E7EB",
+      display: "flex",
     }),
     dropdownIndicator: (baseStyles) => ({
       ...baseStyles,
@@ -61,11 +61,6 @@ const LocationSearch = ({
       cursor: "pointer",
     }),
   };
-  {
-    /* <span class="material-symbols-outlined">
-search
-</span> */
-  }
   return (
     <div className="search-bar-container">
       <AsyncPaginate
@@ -76,6 +71,19 @@ search
         onChange={handleOnChange}
         loadOptions={loadOptions}
         onFocus={handleOnFocus}
+        placeholder={
+          <span>
+            {searchWindow && (
+              <span
+                className="material-symbols-outlined"
+                style={{ fontSize: "1.5em" }}
+              >
+                search
+              </span>
+            )}
+            Search for places
+          </span>
+        }
       />
       {searchWindow ? (
         <button onClick={handleSearch}>Search</button>
