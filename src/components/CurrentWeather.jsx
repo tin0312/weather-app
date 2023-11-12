@@ -14,6 +14,7 @@ export default function CurrentWeather({
   const [locationName, setLocationName] = useState(""); // save locations in localStorage
   const [isOpenned, setIsOpenned] = useState(false); // open saved weather
   const [favLocations, setFavLocations] = useState([]); // save pinnned locations
+  const [searchWindow, setSearchWindow] = useState(false); // toogle search window view
 
   const onSearchChange = (searchData) => {
     // get lat & lon coords from the searchData
@@ -57,27 +58,43 @@ export default function CurrentWeather({
   };
 
   return (
-    <div className="current-weather-container">
-        <LocationSearch
-          onSearchChange={onSearchChange}
-          isOpenned={isOpenned}
-          handleFavDropdown={handleFavDropdown}
-          closeFavDropDown={closeFavDropDown}
-        />
+    <div
+      className={`${
+        searchWindow ? "search-window-view" : "current-weather-container"
+      }`}
+    >
+      <LocationSearch
+        onSearchChange={onSearchChange}
+        isOpenned={isOpenned}
+        handleFavDropdown={handleFavDropdown}
+        closeFavDropDown={closeFavDropDown}
+        setSearchWindow={setSearchWindow}
+        searchWindow={searchWindow}
+      />
       {isOpenned ? (
         <FavouriteLocations
           favLocations={favLocations}
           handleSavedLocationClick={handleSavedLocationClick}
           setIsDisplayed={setIsDisplayed}
         />
-      ) : (
+      ) : !isOpenned && !searchWindow ? (
         <CurrrentWeatherCard
           currentWeather={currentWeather}
           tempUnit={tempUnit}
           locationName={locationName}
           searchCoords={searchCoords}
         />
-      )}
+      ) : null}
     </div>
   );
 }
+
+/*
+
+hover => searchWindow => display search button  
+
+hover => searchWindow => display search button and hide the current user location weather
+
+false => true => dont render, only render when false
+
+*/

@@ -7,17 +7,16 @@ const LocationSearch = ({
   isOpenned,
   handleFavDropdown,
   closeFavDropDown,
+  searchWindow,
+  setSearchWindow,
 }) => {
-  const [searchWindow, setSearchWindow] = useState(false); // toogle search window view
   const [search, setSearch] = useState(null);
-  const [selectedOption, setSelectedOption] = useState(null)
   const loadOptions = async (searchData) => {
     const allCities = await loadAllCities(searchData);
     return allCities;
   };
 
   const handleOnChange = (searchData) => {
-    setSelectedOption(searchData)
     setSearch(searchData);
   
   };
@@ -25,7 +24,8 @@ const LocationSearch = ({
     setSearchWindow(true);
   };
   const handleSearch = () => {
-    onSearchChange(selectedOption);
+    onSearchChange(search);
+    setSearchWindow(false)
   }
   const customStyles = {
     control: (baseStyles, state) => ({
