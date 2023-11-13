@@ -52,7 +52,7 @@ export default function CurrentWeatherCard({
 
   // save fav locations in Firestore
   const toggleSavePlaces = async () => {
-    if (favLocation !== "") {
+    if (locationName !== "") {
       // Check if locationName is not an empty string
       const locationQuery = query(
         collection(db, "locations"),
@@ -81,6 +81,26 @@ export default function CurrentWeatherCard({
       }
     }
   }
+// display pinned locations
+useEffect(() =>{
+  const locationQuery = query(
+    collection(db, "locations"),
+    where("location", "==", favLocation)
+  )
+  const fetchPinnedLocations = async () => {
+    try {
+      const querySnapshot = await getDocs(locationQuery)
+      if (querySnapshot.size > 0) {
+        setIsPinned(true)
+      } else {
+        setIsPinned(false)
+      }
+    } catch (e) {
+      console.error("Error fetching pinned locations: ", e)
+    }
+  }
+  fetchPinnedLocations()
+},[locationName, favLocation])
   return (
     <div className="current-weather-display">
       <div className="current-weather-card">

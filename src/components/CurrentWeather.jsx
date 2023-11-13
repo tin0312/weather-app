@@ -13,7 +13,6 @@ export default function CurrentWeather({
 }) {
   const [locationName, setLocationName] = useState(""); // save locations in localStorage
   const [isOpenned, setIsOpenned] = useState(false); // open saved weather
-  const [favLocations, setFavLocations] = useState([]); // save pinnned locations
   const [searchWindow, setSearchWindow] = useState(false); // toogle search window view
 
   const onSearchChange = (searchData) => {
@@ -29,13 +28,7 @@ export default function CurrentWeather({
   };
   // render saved places from local storage
   const handleFavDropdown = () => {
-    let updatedFavLocations = [];
     setIsOpenned((isOpenned) => !isOpenned);
-    for (let i = 0; i < localStorage.length; i++) {
-      let key = JSON.parse(localStorage.key(i) || "{}");
-      updatedFavLocations.push(key);
-    }
-    setFavLocations(updatedFavLocations);
   };
 
   const closeFavDropDown = () => {
@@ -43,17 +36,15 @@ export default function CurrentWeather({
   };
   // retrieve saved location &  saved coords
   const handleSavedLocationClick = (location) => {
-    setLocationName(location);
+    setLocationName(location.location);
     setIsOpenned(false);
-    getSavedCoords(location);
+    getSavedCoords(location.lat, location.lon);
   };
   //retrive saved coords from localStorage and save it in savedCoords
-  const getSavedCoords = (location) => {
-    const value = localStorage.getItem(JSON.stringify(location));
-    const { lat, lon } = JSON.parse(value || "{}");
+  const getSavedCoords = (lat, lon) => {
     setSavedCoords({
       lat: lat,
-      lon: lon,
+      lon: lon
     });
   };
 
@@ -73,9 +64,9 @@ export default function CurrentWeather({
       />
       {isOpenned ? (
         <FavouriteLocations
-          favLocations={favLocations}
           handleSavedLocationClick={handleSavedLocationClick}
           setIsDisplayed={setIsDisplayed}
+          getSavedCoords={getSavedCoords}
         />
       ) : !isOpenned && !searchWindow ? (
         <CurrrentWeatherCard
