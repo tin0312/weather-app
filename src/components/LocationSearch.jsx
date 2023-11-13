@@ -17,7 +17,7 @@ const LocationSearch = ({
   };
 
   const handleOnChange = (searchData) => {
-    setSearch(searchData);
+    setSearch(searchData)
   };
   const handleOnFocus = () => {
     setSearchWindow(true);
@@ -25,6 +25,7 @@ const LocationSearch = ({
   const handleSearch = () => {
     onSearchChange(search);
     setSearchWindow(false);
+    setSearch(null)
   };
   const customStyles = {
     control: (baseStyles, state) => ({
@@ -65,7 +66,6 @@ const LocationSearch = ({
     <div className="search-bar-container">
       <AsyncPaginate
         styles={customStyles}
-        placeholder="Search for places"
         debounceTimeout={600}
         value={search}
         onChange={handleOnChange}

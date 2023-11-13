@@ -453,9 +453,14 @@
     flex-direction: column;
   }
   .current-weather-container,
-  .weather-detail-container {
+  .weather-detail-container,
+  .search-window-view {
     width: 100vw;
     height: auto;
+  }
+  .search-window-view{
+    width: 100vw;
+    height: 100vh;
   }
   .future-card-container {
     flex-wrap: wrap;

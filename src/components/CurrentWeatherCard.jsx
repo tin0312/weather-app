@@ -1,6 +1,16 @@
-import React, { useState, useEffect } from "react";
-import { formattedDate } from "../utils/dateUtils";
-import * as weatherIcon from "../assets";
+import React, { useState, useEffect } from "react"
+import { formattedDate } from "../utils/dateUtils"
+import {
+  getDocs,
+  query,
+  where,
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+} from "firebase/firestore"
+import { db } from "../firebase/firebase"
+import * as weatherIcon from "../assets"
 
 export default function CurrentWeatherCard({
   currentWeather,
@@ -8,7 +18,7 @@ export default function CurrentWeatherCard({
   locationName,
   searchCoords,
 }) {
-  const { weather, temp, name, time_stamp } = currentWeather;
+  const { weather, temp, name, time_stamp } = currentWeather
   const date = formattedDate(time_stamp);
   const weatherIcons =
     weather === "Clear"
@@ -38,25 +48,39 @@ export default function CurrentWeatherCard({
   // Initialize location and locationId
   const favLocation = JSON.stringify(locationName);
   const favCoords = JSON.stringify(searchCoords);
-  const [isPinned, setIsPinned] = useState(false);
+  const [isPinned, setIsPinned] = useState(false)
 
-  // check if location is saved in local storage
-  const isLocationSaved = () => localStorage.getItem(favLocation) !== null;
-// Handle favorite place toggle
-const toggleSavePlaces = () => {
-  if (locationName !== "") { // Check if locationName is not an empty string
-    if (!isLocationSaved()) {
-      localStorage.setItem(favLocation, favCoords);
-    } else {
-      localStorage.removeItem(favLocation);
+  // save fav locations in Firestore
+  const toggleSavePlaces = async () => {
+    if (favLocation !== "") {
+      // Check if locationName is not an empty string
+      const locationQuery = query(
+        collection(db, "locations"),
+        where("location", "==", favLocation)
+      )
+      try {
+        const querySnapshot = await getDocs(locationQuery)
+        // if doc id is not present and unique
+        if (querySnapshot.size === 0) {
+          // add in firestore
+          await addDoc(collection(db, "locations"), {
+            location: favLocation,
+            coords: favCoords,
+          })
+          setIsPinned(true)
+        } else {
+          //remove the item from firestore
+          querySnapshot.forEach(async (docSnapShot) => {
+            const docRef = doc(db, "locations", docSnapShot.id)
+            await deleteDoc(docRef)
+          })
+          setIsPinned(false)
+        }
+      } catch (e) {
+        console.error("Error adding document: ", e)
+      }
     }
-    setIsPinned(isLocationSaved());
   }
-};
-
-  useEffect(() => {
-    setIsPinned(isLocationSaved());
-  }, [favLocation]);
   return (
     <div className="current-weather-display">
       <div className="current-weather-card">
@@ -73,16 +97,19 @@ const toggleSavePlaces = () => {
         <h3 className="current-location">
           <span
             onClick={toggleSavePlaces}
-            className={`${isPinned  ? "material-symbols-outlined pinned-icon" : "material-symbols-outlined location"}`}
+            className={`${
+              isPinned
+                ? "material-symbols-outlined pinned-icon"
+                : "material-symbols-outlined location"
+            }`}
           >
             {" "}
             {isPinned ? "pin_drop" : "location_on"}
           </span>
- 
+
           {name}
         </h3>
       </div>
     </div>
-  );
+  )
 }
-
