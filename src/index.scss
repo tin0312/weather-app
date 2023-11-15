@@ -1,6 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+// @tailwind base;
+// @tailwind components;
+// @tailwind utilities;
 
 * {
   margin: 0;
@@ -92,7 +92,6 @@
 .saved-location:hover {
   cursor: pointer;
   font-weight: 700;
-  height: 50px;
 }
 .current-weather-display {
   display: flex;
@@ -172,7 +171,6 @@
 .weather-detail-container {
   display: flex;
   flex-direction: column;
-  height: 100vh;
   width: 65vw;
   background-color: #100e1d;
   color: #e7e7eb;
@@ -446,8 +444,8 @@
   height: 159px;
 }
 .footer {
-  margin-top: 14%;
-  margin-bottom: 25px;
+  margin-top: 4em;
+  bottom: 0;
   color: #a09fb1;
   text-align: center;
   font-family: "Montserrat", sans-serif;

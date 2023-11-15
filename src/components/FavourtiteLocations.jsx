@@ -34,7 +34,10 @@ export default function FavouriteLocations({
     <div>
       <ul className="favourite-locations">
         {favLocations?.map((savedLocation, index) => (
-          <li onClick={() => handleLocationClick(savedLocation)} key={index}>
+          <li
+            onClick={() => handleLocationClick(savedLocation)}
+            key={index}
+          >
             {savedLocation.location}
             <span>
               <span className="material-symbols-outlined">navigate_next</span>

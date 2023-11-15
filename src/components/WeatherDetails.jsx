@@ -29,8 +29,3 @@ export default function WeatherDetails({ weatherHightLights, forecastData, toogl
       </div>
   );
 }
-/*
-
-
-
-*/
