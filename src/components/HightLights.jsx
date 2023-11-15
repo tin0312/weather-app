@@ -37,8 +37,26 @@ export default function HightLights({ weatherHightLights, tempUnit }) {
       : wind_degree < 360
       ? "NNW"
       : "N";
- const arrowClassList = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW","WSW","W","WNW","NW","NNW"];
- const wind_arrow_direction = arrowClassList[Math.floor(wind_degree  / 22.5) % 16 ]
+  const arrowClassList = [
+    "N",
+    "NNE",
+    "NE",
+    "ENE",
+    "E",
+    "ESE",
+    "SE",
+    "SSE",
+    "S",
+    "SSW",
+    "SW",
+    "WSW",
+    "W",
+    "WNW",
+    "NW",
+    "NNW",
+  ];
+  const wind_arrow_direction =
+    arrowClassList[Math.floor(wind_degree / 22.5) % 16];
 
   return (
     <div className="hightlight-container">
@@ -46,33 +64,58 @@ export default function HightLights({ weatherHightLights, tempUnit }) {
       <div className="feature-container">
         <div className="feature-box">
           <h3>Wind status</h3>
-          <p> {wind_speed} <span className="feature-unit">mph</span></p>
-          <p id="wind-direction">
-            <span id = "wind-arrow" className={` material-symbols-outlined ${wind_arrow_direction}`}>navigation</span>
-            {wind_direction}
+          <p>
+            {" "}
+            {wind_speed} <span className="feature-unit">mph</span>
           </p>
+          <div className="wind-direction-container">
+            <div className="wind-arrow-container">
+              <div
+                id={`${wind_arrow_direction}`}
+                className="material-symbols-outlined wind-arrow"
+              >
+                navigation
+              </div>
+            </div>
+            <h4 className="text-xl">{wind_direction}</h4>
+          </div>
         </div>
         <div className="feature-box">
           <h3>Humidity</h3>
-          <p> {humidity} <span className="feature-unit">%</span></p>
+          <p>
+            {" "}
+            {humidity} <span className="feature-unit">%</span>
+          </p>
           <div className="humidity-container">
-           <div className="humidity-labels">
-                <h4>0</h4>
-                <h4>50</h4>
-                <h4>100</h4>
-          </div> 
-          <div className="humidity-bar">
-            <div className="humidity-filled" style = { {width : `${humidity}%`}}></div>
+            <div className="humidity-labels">
+              <h4>0</h4>
+              <h4>50</h4>
+              <h4>100</h4>
+            </div>
+            <div className="humidity-bar">
+              <div
+                className="humidity-filled"
+                style={{ width: `${humidity}%` }}
+              ></div>
+            </div>
           </div>
         </div>
-          </div>
         <div className="feature-box" id="feel-like">
           <h3>Feel Like</h3>
-          <p> {feels_like} <span className="feature-unit">{tempUnit === "Celsius" ? "°C" : "°F"}</span></p>
+          <p>
+            {" "}
+            {feels_like}{" "}
+            <span className="feature-unit">
+              {tempUnit === "Celsius" ? "°C" : "°F"}
+            </span>
+          </p>
         </div>
         <div className="feature-box " id="air-pressure">
           <h3>Air Pressure</h3>
-          <p> {air_pressure} <span className="feature-unit">mb</span></p>
+          <p>
+            {" "}
+            {air_pressure} <span className="feature-unit">mb</span>
+          </p>
         </div>
       </div>
     </div>

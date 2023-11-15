@@ -1,6 +1,6 @@
-// @tailwind base;
-// @tailwind components;
-// @tailwind utilities;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 * {
   margin: 0;
@@ -138,7 +138,7 @@
   width: 100%;
   justify-content: center;
   align-items: center;
-  gap: 30px;
+  gap: 4em;
   color: #88869d;
   font-family: "Raleway", sans-serif;
   font-weight: 500;
@@ -232,8 +232,8 @@
   position: absolute;
   top: 4px;
   left: 0;
-  width: 20px;
-  height: 10px;
+  width: 40%;
+  height: 80%;
   color: black;
   font-size: 10px;
   font-weight: bold;
@@ -247,9 +247,10 @@
 
 #button-1 .checkbox:checked + .knobs:before {
   content: "°F";
-  left: 50px;
+  left: 4.7em;
   background-color: #585676;
   color: #E7E7EB;
+  text-align: center;
 }
 
 /*Start of future-card-container */
@@ -326,12 +327,11 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 20px;
+  gap: 0.5em;
   font-family: "Raleway", sans-serif;
   font-weight: 500;
 }
 .feature-box h3 {
-  text-align: center;
   font-size: 16px;
 }
 .feature-box p {
@@ -342,80 +342,87 @@
   color: #e7e7eb;
   font-size: 36px;
 }
-#wind-direction {
+.wind-direction-container{
   font-size: 18px;
+  display: flex;
+  gap:0.5em;
 }
-#wind-arrow {
-  font-size: 24px;
-  margin-right: 10px;
-  width: 26px;
-  height: 26px;
-  border-radius: 50%;
-  padding: 5px;
+.wind-arrow-container{
+  width: 30px;
+  height: 30px;
   background-color: #88869d;
-  color: #e7e7eb;
+  border-radius: 50%;
 }
-.N {
+.wind-arrow{
+  font-size: 1em;
+  width: inherit;
+  height: inherit;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#N {
   transform: rotate(0deg);
 }
 
-.NNE {
+#NNE {
   transform: rotate(22.5deg);
 }
 
-.NE {
+#NE {
   transform: rotate(45deg);
 }
 
-.ENE {
+#ENE {
   transform: rotate(67.5deg);
 }
 
-.E {
+#E {
   transform: rotate(90deg);
 }
 
-.ESE {
+#ESE {
   transform: rotate(112.5deg);
 }
 
-.SE {
+#SE {
   transform: rotate(135deg);
 }
 
-.SSE {
+#SSE {
   transform: rotate(157.5deg);
 }
 
-.S {
+#S {
   transform: rotate(180deg);
 }
 
-.SSW {
+#SSW {
   transform: rotate(202.5deg);
 }
 
-.SW {
+#SW {
   transform: rotate(225deg);
 }
 
-.WSW {
+#WSW {
   transform: rotate(247.5deg);
 }
 
-.W {
+#W {
   transform: rotate(270deg);
 }
 
-.WNW {
+#WNW {
   transform: rotate(292.5deg);
 }
 
-.NW {
+#NW {
   transform: rotate(315deg);
 }
 
-.NNW {
+#NNW {
   transform: rotate(337.5deg);
 }
 .humidity-container {
